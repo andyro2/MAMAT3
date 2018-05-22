@@ -3,6 +3,7 @@
 #include <string.h>
 #include "Soldier.h"
 
+
 #define MAX_ID_LENGTH 4
 #define MAX_POS_LENGTH 6
 
@@ -26,14 +27,13 @@ soldier* Soldier_Create(char* ID, char* pos)
 	return s;
 }
 
-void Soldier_Delete(soldier* soldier)
+void Soldier_Delete(soldier* sol)
 {
-	if (soldier == NULL)
+	if (sol == NULL)
 		return;
-	free(soldier);
+	free(sol);
 	return;
 }
-
 
 soldier* Soldier_Duplicate(soldier* exist_soldier)
 {
@@ -47,11 +47,10 @@ soldier* Soldier_Duplicate(soldier* exist_soldier)
 	return new_soldier;
 }
 
-
-void Soldier_Print(soldier* soldier) {
-	if (soldier == NULL) {
+void Soldier_Print(soldier* sol) {
+	if (sol == NULL) {
 		return;
 	}
-	printf("%s , %s\n", soldier->ID, soldier->pos);
+	printf("%s , %s\n", sol->ID, sol->pos);
 	return;
 }

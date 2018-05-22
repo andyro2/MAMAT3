@@ -1,7 +1,10 @@
-#ifndef _Soldier_h
-#define _Soldier_h
+#ifndef _SOLDIER_H_
+#define _SOLDIER_H_
 
-typedef struct Soldier_ soldier; /*struct of soldier*/
+//typedef struct Soldier_ soldier; /*struct of soldier*/
+
+
+typedef struct Soldier_ soldier;
 
 soldier* Soldier_Create(char*, char*); /*builds struct of soldier with given ID and pos*/
 

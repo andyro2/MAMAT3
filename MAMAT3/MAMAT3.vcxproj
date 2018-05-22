@@ -22,8 +22,8 @@
     <ClInclude Include="Soldier.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Soldier.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="Soldier.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -86,7 +86,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
