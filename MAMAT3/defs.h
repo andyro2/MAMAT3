@@ -12,8 +12,8 @@
 #define MAX_INPUT_LINE 100			// for main input line
 
 
-//#define MALLOC_ERR_MSG "Error: Cant perform Malloc\n"
-//#define ARG_ERR_MSG "Error: Function's Args Error\n"
+#define MALLOC_ERR_MSG "Error: Cant perform Malloc\n"
+#define ARG_ERR_MSG "Error: Function's Args Error\n"
 
 
 
