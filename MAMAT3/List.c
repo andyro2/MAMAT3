@@ -4,18 +4,20 @@ typedef struct Node_
 {
 	PElem* elem;
 	PKey* key;
-	struct Node_* pNext;
+	//struct Node_* pNext;
+	PNode pNext; // there is typedef for Pnode
 } Node;
 
 typedef struct List_
 {
-	struct Node_* pNode;
+	//struct Node_* pNode;
+	PNode pNode;
 	CLONE_FUNC clone_func;
 	DESTROY_FUNC destroy_func;
 	COMPARE_KEYS_FUNC comp_keys_func;
 	PRINT_FUNC print_func;
 	GET_KEY_FUNC get_key_func;
-	int num; /**/
+	int num; 
 } List;
 
 PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS_FUNC comp_keys_func, PRINT_FUNC print_func, GET_KEY_FUNC get_key_func)
@@ -36,7 +38,7 @@ PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS
 	free(l);
 	return NULL;
 	}*/ //I don't think the Node should be allocated in List Create
-	l->pNode = NULL;
+	l->pNode = NULL; //TODO check if needs alloc (I think it needs alloc because it's a struct /Andy)
 	l->clone_func = clone_func;
 	l->destroy_func = destroy_func;
 	l->comp_keys_func = comp_keys_func;
@@ -56,9 +58,9 @@ void List_Delete(PList l)
 	Node* tempNode = l->pNode;
 	while (currNode) {
 		currNode = currNode->pNext;
-		l->destroy_func(tempNode->elem); //we assume also frees key
-		free(tempNode);
-		l->num--; /**/
+		l->destroy_func(tempNode->elem); //we assume also frees key (maybe? :/ )
+		free(tempNode); //if node dosen't have alloc then free is a warning (therefore needs alloc or no free)
+		l->num--; 
 		tempNode = currNode;
 	}
 	//free(l->destroy_func); // free all the func? They didnt (lecture&exercise) so I guess we Shouldn't
@@ -94,7 +96,7 @@ Result List_Add_Elem(PList l, PElem elem)
 	printf(MALLOC_ERR_MSG);
 	return FAILURE;
 	}*/
-	new = l->clone_func(elem); //!!
+	new = l->clone_func(elem); 
 	currNode = l->pNode;
 	prevNode = l->pNode;
 	while (currNode) {
@@ -111,7 +113,7 @@ Result List_Add_Elem(PList l, PElem elem)
 	currNode->key = l->get_key_func(new);
 	currNode->pNext = NULL;
 	prevNode->pNext = currNode;
-	l->num++; /**/
+	l->num++;
 	return SUCCESS;
 }
 
@@ -140,13 +142,13 @@ Result List_Remove_Elem(PList l, PKey key)
 
 PElem List_Get_First(PList l)
 {
-	PNode n;
+	//PNode n;
 	if ((l == NULL) || (l->pNode == NULL)) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	n = l->pNode;
-	return n->elem;
+	//n = l->pNode; //unnecessary
+	return l->pNode->elem;
 }
 
 PElem List_Get_Next(PList l)

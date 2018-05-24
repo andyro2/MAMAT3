@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Soldier.h"
-
+#include "defs.h"
 
 #define MAX_ID_LENGTH 4
 #define MAX_POS_LENGTH 6
@@ -15,11 +15,14 @@ struct Soldier_ {
 soldier* Soldier_Create(char* ID, char* pos)
 {
 	soldier* s;
-	if (ID == NULL || pos == NULL)
+	if (ID == NULL || pos == NULL) {
+		printf(ARG_ERR_MSG);
 		return NULL;
+	}
 	s = (soldier*)malloc(sizeof(soldier));
 	if (s == NULL) {
 		free(s);
+		printf(MALLOC_ERR_MSG);
 		return NULL;
 	}
 	strcpy(s->ID, ID);
@@ -29,26 +32,31 @@ soldier* Soldier_Create(char* ID, char* pos)
 
 void Soldier_Delete(soldier* sol)
 {
-	if (sol == NULL)
+	if (sol == NULL) {
+		printf(ARG_ERR_MSG);
 		return;
+	}
 	free(sol);
 	return;
 }
 
 soldier* Soldier_Duplicate(soldier* exist_soldier)
 {
-	if (exist_soldier == NULL)
+	if (exist_soldier == NULL) {
+		printf(ARG_ERR_MSG);
 		return NULL;
+	}
 
 	soldier* new_soldier = Soldier_Create(exist_soldier->pos, exist_soldier->ID);
-	if (new_soldier == NULL)
+	if (new_soldier == NULL) {
 		return NULL;
-
+	}
 	return new_soldier;
 }
 
 void Soldier_Print(soldier* sol) {
 	if (sol == NULL) {
+		printf(ARG_ERR_MSG);
 		return;
 	}
 	printf("%s , %s\n", sol->ID, sol->pos);

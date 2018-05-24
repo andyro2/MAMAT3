@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "APC.h"
 #include "Soldier.h"
 #include "defs.h"
@@ -14,11 +16,15 @@ struct APC_ {
 APC* APC_Create(char* ID)
 {
 	APC* apc;
-	if (ID == NULL)
+	if (ID == NULL) {
+		printf(ARG_ERR_MSG);
 		return NULL;
+	}
+
 	apc = (APC*)malloc(sizeof(APC));
 	if (apc == NULL) {
 		free(apc);
+		printf(MALLOC_ERR_MSG);
 		return NULL;
 	}
 	strcpy(apc->ID, ID);
@@ -28,8 +34,10 @@ APC* APC_Create(char* ID)
 
 void APC_Delete(APC* apc)
 {
-	if (apc == NULL)
+	if (apc == NULL) {
+		printf(ARG_ERR_MSG);
 		return;
+	}
 	for (int i=0; i < apc->soldiers_num; i++)
 		Soldier_Delete(apc->soldiers[i]);
 	free(apc);
@@ -38,8 +46,10 @@ void APC_Delete(APC* apc)
 
 
 void APC_Print(APC* apc) {
-	if (apc == NULL) 
+	if (apc == NULL) {
+		printf(ARG_ERR_MSG);
 		return;
+	}
 
 	printf("%s , Occupancy: %d/%d\n", apc->ID, apc->soldiers_num, APC_MAX_SOLDIERS);
 	if (apc->soldiers_num > 0) {
@@ -53,6 +63,10 @@ void APC_Print(APC* apc) {
 APC* APC_Duplicate(APC* apc)
 {
 	APC* new_apc;
+	if (apc == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	new_apc = APC_Create(apc->ID);
 	for (int i = 0; i < apc->soldiers_num; i++) {
 		new_apc->soldiers[i] = Soldier_Duplicate(apc->soldiers[i]);
@@ -63,6 +77,11 @@ APC* APC_Duplicate(APC* apc)
 
 Result APC_Insert_Soldier(APC* apc, soldier* sold)
 {
+	if (apc == NULL || sold == NULL)
+	{
+		printf(ARG_ERR_MSG);
+		return FAILURE;
+	}
 	if (apc->soldiers_num < APC_MAX_SOLDIERS)
 	{
 		//apc->soldiers[apc->soldiers_num] = Soldier_Duplicate(sold); 
@@ -77,6 +96,10 @@ Result APC_Insert_Soldier(APC* apc, soldier* sold)
 
 soldier* APC_Pop(APC* apc)
 {
+	if (apc == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	soldier* sold;
 	if (apc->soldiers_num != 0)
 	{
