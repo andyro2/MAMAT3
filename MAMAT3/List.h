@@ -4,8 +4,9 @@
 /**Includes**/
 #include "defs.h"
 
-typedef struct Node_ *PNode;
-typedef struct List_ *PList;
+
+typedef struct Node_ Node, *PNode;
+typedef struct List_ List, *PList;
 typedef void* PElem;
 typedef void* PKey;
 typedef PElem(*CLONE_FUNC)(PElem);

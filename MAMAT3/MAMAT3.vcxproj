@@ -36,7 +36,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D40A6700-79A5-4614-924C-93ACD4074A76}</ProjectGuid>
     <RootNamespace>MAMAT3</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

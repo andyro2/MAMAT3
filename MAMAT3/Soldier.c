@@ -1,8 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "Soldier.h"
-#include "defs.h"
+#include "List.h"
 
 
 struct Soldier_ {
@@ -60,3 +57,34 @@ void Soldier_Print(soldier* sol) {
 	printf("%s , %s\n", sol->ID, sol->pos);
 	return;
 }
+
+/* User's Function*/
+
+bool Soldier_Compare_Func(PKey ID1, PKey ID2)
+{
+	return !strcmp((char*)ID1, (char*)ID2);
+}
+void Soldier_Destroy_Func(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	Soldier_Delete(s);
+	return;
+}
+PElem Soldier_Clone_Func(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	s = Soldier_Duplicate(s);
+	return s;
+}
+void Soldier_Print_Func(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	Soldier_Print(s);
+	return;
+}
+PKey Soldier_Get_Key_Function(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	return s->ID;
+}
+

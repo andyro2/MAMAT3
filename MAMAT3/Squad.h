@@ -4,8 +4,7 @@
 /**Includes**/
 #include "defs.h"
 
-typedef struct Squad_ Squad;
-typedef Squad* PSquad;
+typedef struct Squad_ Squad , *PSquad;
 PSquad Squad_Duplicate(PSquad);
 void Squad_Print_Func(PElem);
 

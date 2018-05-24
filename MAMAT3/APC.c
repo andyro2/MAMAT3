@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "APC.h"
 #include "Soldier.h"
-#include "defs.h"
-
-#define MAX_ID_LENGTH 4
-#define APC_MAX_SOLDIERS 6
+#include "List.h"
 
 struct APC_ {
 	soldier* soldiers[APC_MAX_SOLDIERS];
@@ -110,5 +105,34 @@ soldier* APC_Pop(APC* apc)
 
 	fprintf(stderr, "Error: APC is Empty\n");
 	return NULL;
+}
+
+
+bool APC_Compare_Func(PKey ID1, PKey ID2)
+{
+	return !strcmp((char*)ID1, (char*)ID2);
+}
+void APC_Destroy_Func(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	APC_Delete(a);
+	return;
+}
+PElem APC_Clone_Func(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	a = APC_Duplicate(a);
+	return a;
+}
+void APC_Print_Func(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	APC_Print(a);
+	return;
+}
+PKey APC_Get_Key_Function(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	return a->ID;
 }
 
