@@ -23,12 +23,14 @@
     <ClCompile Include="List.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Soldier.c" />
+    <ClCompile Include="Squad.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APC.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Soldier.h" />
+    <ClInclude Include="Squad.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

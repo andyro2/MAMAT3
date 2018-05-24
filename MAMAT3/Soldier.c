@@ -4,8 +4,6 @@
 #include "Soldier.h"
 #include "defs.h"
 
-#define MAX_ID_LENGTH 4
-#define MAX_POS_LENGTH 6
 
 struct Soldier_ {
 	char pos[MAX_POS_LENGTH];

@@ -4,13 +4,11 @@ typedef struct Node_
 {
 	PElem* elem;
 	PKey* key;
-	//struct Node_* pNext;
-	PNode pNext; // there is typedef for Pnode
+	PNode pNext; 
 } Node;
 
 typedef struct List_
 {
-	//struct Node_* pNode;
 	PNode pNode;
 	CLONE_FUNC clone_func;
 	DESTROY_FUNC destroy_func;
@@ -38,7 +36,7 @@ PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS
 	free(l);
 	return NULL;
 	}*/ //I don't think the Node should be allocated in List Create
-	l->pNode = NULL; //TODO check if needs alloc (I think it needs alloc because it's a struct /Andy)
+	l->pNode = NULL; 
 	l->clone_func = clone_func;
 	l->destroy_func = destroy_func;
 	l->comp_keys_func = comp_keys_func;

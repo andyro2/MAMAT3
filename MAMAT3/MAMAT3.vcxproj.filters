@@ -27,6 +27,9 @@
     <ClCompile Include="Soldier.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Squad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APC.h">
@@ -39,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Soldier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Squad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
