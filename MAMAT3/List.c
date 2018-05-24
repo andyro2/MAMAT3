@@ -1,13 +1,13 @@
 #include "List.h"
 
-typedef struct Node_
+struct Node_
 {
 	PElem* elem;
 	PKey* key;
 	PNode pNext; 
-} Node;
+};
 
-typedef struct List_
+struct List_
 {
 	PNode pNode;
 	CLONE_FUNC clone_func;
@@ -16,12 +16,12 @@ typedef struct List_
 	PRINT_FUNC print_func;
 	GET_KEY_FUNC get_key_func;
 	int num; 
-} List;
+};
 
 PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS_FUNC comp_keys_func, PRINT_FUNC print_func, GET_KEY_FUNC get_key_func)
 {
 	PList l;
-	if ((clone_func == NULL) || (destroy_func == NULL) || (comp_keys_func == NULL) || (print_func == NULL)) {
+	if ((clone_func == NULL) || (destroy_func == NULL) || (comp_keys_func == NULL) || (print_func == NULL)|| get_key_func == NULL) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
