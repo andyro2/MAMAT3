@@ -24,7 +24,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="Soldier.c" />
     <ClCompile Include="Squad.c" />
-    <ClCompile Include="test.c" />
+    <ClCompile Include="WarZone.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="APC.h" />
@@ -32,6 +32,7 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="Squad.h" />
+    <ClInclude Include="WarZone.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -103,11 +104,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
