@@ -21,7 +21,23 @@ Result Squad_Insert_Sold_APC(PSquad squad, char* sol_ID, char* apc_ID);
 Result Squad_APC_Pop(PSquad squad, char* apc_ID);
 Result Squad_Delete_Soldier(PSquad squad, char* sol_ID);
 Result Squad_Delete_APC(PSquad, char*);
+bool Squad_Valid_ID(char*);
+
+/*User Functions*/
 
 void Squad_Print_Func(PElem);
 
+/* Soldier Functions*/
+bool Soldier_Compare_Func(PKey, PKey);
+void Soldier_Destroy_Func(PElem);
+PElem Soldier_Clone_Func(PElem);
+void Soldier_Print_Func(PElem);
+PKey Soldier_Get_Key_Function(PElem);
+
+/* APC Functions*/
+bool APC_Compare_Func(PKey, PKey);
+void APC_Destroy_Func(PElem);
+PElem APC_Clone_Func(PElem);
+void APC_Print_Func(PElem);
+PKey APC_Get_Key_Function(PElem);
 #endif 

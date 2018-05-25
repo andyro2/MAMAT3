@@ -58,33 +58,18 @@ void Soldier_Print(soldier* sol) {
 	return;
 }
 
-/* User's Function*/
+bool Soldier_Valid_ID_Pos(char* ID, char* pos)
+{
+	if (pos == NULL || ID == NULL)
+		return false;
+	if (ID[0] != 'S' || strlen(ID + 1) != LENGTH_OF_NUMS)
+		return false;
+	if (!strcmp(pos, "DRIVER") || !strcmp(pos, "MED") || !strcmp(pos, "ENG") || !strcmp(pos, "INT") || !strcmp(pos, "GUNNER"))
+		return false;
+	return true;
+}
 
-bool Soldier_Compare_Func(PKey ID1, PKey ID2)
+char* Soldier_Get_ID(soldier* s)
 {
-	return !strcmp((char*)ID1, (char*)ID2);
-}
-void Soldier_Destroy_Func(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	Soldier_Delete(s);
-	return;
-}
-PElem Soldier_Clone_Func(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	s = Soldier_Duplicate(s);
-	return s;
-}
-void Soldier_Print_Func(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	Soldier_Print(s);
-	return;
-}
-PKey Soldier_Get_Key_Function(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
 	return s->ID;
 }
-
