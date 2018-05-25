@@ -16,7 +16,7 @@ PSquad Squad_Create(char* ID,
 	, CLONE_FUNC clone_func_apc, DESTROY_FUNC destroy_func_apc, COMPARE_KEYS_FUNC comp_keys_func_apc, PRINT_FUNC print_func_apc, GET_KEY_FUNC get_key_func_apc)
 {
 	PSquad s;
-	if (ID == NULL)
+	if (ID == NULL || !Squad_Valid_ID(ID))
 	{
 		printf(ARG_ERR_MSG);
 		return NULL;
@@ -43,6 +43,15 @@ PSquad Squad_Create(char* ID,
 	strcpy(s->ID, ID);
 	return s;
 }
+
+bool Squad_Valid_ID(char* ID)
+{
+	if (ID == NULL || ID[0] != 'S' || ID[1] != 'q' ||strlen(ID+2)!= LENGTH_OF_NUMS) {
+		return false;
+	}
+	return true;
+}
+
 
 void Squad_Delete(PSquad squad)
 {
@@ -100,19 +109,25 @@ PSquad Squad_Duplicate(PSquad Squad) {
 
 Result Squad_Add_Soldier(PSquad squad, char* pos, char* ID)
 {
-	if (squad == NULL || pos == NULL || ID == NULL)
+	if (squad == NULL || !Soldier_Valid_ID_Pos(ID,pos))
 	{
 		printf(ARG_ERR_MSG);
 		return FAILURE;
 	}
+	Result r;
 	//PList sol = List_Create(Soldier_Clone_Func, Soldier_Destroy_Func, Soldier_Compare_Func, Soldier_Print_Func, Soldier_Get_Key_Function);
 	soldier* s = Soldier_Create(ID, pos);//TODO needs to be done without soldier struct (? or not ? ) 
-	return List_Add_Elem(squad->Soldiers, s);
+	r = List_Add_Elem(squad->Soldiers, s);
+	if (r == SUCCESS) {
+		squad->Count++;
+		return r;
+	}
+	return r;
 }
 
 Result Squad_Add_APC(PSquad squad, char* ID)
 {
-	if (squad == NULL || ID == NULL)
+	if (squad == NULL || !APC_Valid_ID(ID))
 	{
 		printf(ARG_ERR_MSG);
 		return FAILURE;
@@ -145,9 +160,10 @@ Result Squad_APC_Pop(PSquad squad, char* apc_ID)
 	}
 	APC* a = (APC*)List_Get_Elem(squad->APCs, apc_ID);
 	soldier* s = APC_Pop(a);
-	if (s == NULL)
+	if (s == NULL || a == NULL)
 		return FAILURE;
-	return SUCCESS;
+	return List_Add_Elem(squad->Soldiers, s);
+	
 }
 
 Result Squad_Delete_Soldier(PSquad squad, char* sol_ID)
@@ -157,13 +173,34 @@ Result Squad_Delete_Soldier(PSquad squad, char* sol_ID)
 		printf(ARG_ERR_MSG);
 		return FAILURE;
 	}
-	soldier* s = (soldier*)List_Get_Elem(squad->Soldiers, sol_ID);
-
+	Result r;
+	r = List_Remove_Elem(squad->Soldiers, sol_ID);
+	if (r == SUCCESS) {
+		squad->Count--;
+		return r;
+	}
+	return r;
 }
 
 Result Squad_Delete_APC(PSquad squad, char* apc_ID)
 {
-	return;
+	if (squad == NULL || apc_ID == NULL)
+	{
+		printf(ARG_ERR_MSG);
+		return FAILURE;
+	}
+	Result r;
+	APC* a =  (APC*)List_Get_Elem(squad->APCs,apc_ID);
+	if (a == NULL)
+		return FAILURE;
+
+	int solds_in_apc = Get_Num_Soldiers(a);
+	r = List_Remove_Elem(squad->APCs, apc_ID);
+	if (r == SUCCESS) {
+		squad->Count = squad->Count - solds_in_apc;
+		return r;
+	}
+	return r;
 }
 
 
@@ -179,6 +216,71 @@ void Squad_Print_Func(PElem Data) {
 		return;
 	}
 	Squad_Print((PSquad)Data);
+}
+
+/* Soldier Functions*/
+
+bool Soldier_Compare_Func(PKey ID1, PKey ID2)
+{
+	if (!strcmp((char*)ID1, (char*)ID2))
+		return true;
+	return false;
+}
+void Soldier_Destroy_Func(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	Soldier_Delete(s);
+	return;
+}
+PElem Soldier_Clone_Func(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	s = Soldier_Duplicate(s);
+	return s;
+}
+void Soldier_Print_Func(PElem pElem)
+{
+	soldier* s = (soldier*)pElem;
+	Soldier_Print(s);
+	return;
+}
+PKey Soldier_Get_Key_Function(PElem pElem)
+{
+
+	soldier* s = (soldier*)pElem;
+	return Soldier_Get_ID(s);
+}
+
+/* APC Functions*/
+
+bool APC_Compare_Func(PKey ID1, PKey ID2)
+{
+	if (!strcmp((char*)ID1, (char*)ID2))
+		return true;
+	return false;
+}
+void APC_Destroy_Func(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	APC_Delete(a);
+	return;
+}
+PElem APC_Clone_Func(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	a = APC_Duplicate(a);
+	return a;
+}
+void APC_Print_Func(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	APC_Print(a);
+	return;
+}
+PKey APC_Get_Key_Function(PElem pElem)
+{
+	APC* a = (APC*)pElem;
+	return APC_Get_ID(a);
 }
 
 

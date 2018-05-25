@@ -1,6 +1,5 @@
 #include "Soldier.h"
 #include "defs.h"
-#include "List.h"
 
 #ifndef _APC_H
 #define _APC_H
@@ -19,9 +18,9 @@ Result APC_Insert_Soldier(APC*, soldier* ); /*inserts new soldier in to APC*/
 
 soldier* APC_Pop(APC*); /*removes last soldier from APC*/
 
-bool APC_Compare_Func(PKey, PKey);
-void APC_Destroy_Func(PElem);
-PElem APC_Clone_Func(PElem);
-void APC_Print_Func(PElem);
-PKey APC_Get_Key_Function(PElem);
+bool APC_Valid_ID(char* ID);
+
+char* APC_Get_ID(APC* a);
+
+int Get_Num_Soldiers(APC* a);
 #endif

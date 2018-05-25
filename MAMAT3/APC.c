@@ -107,32 +107,25 @@ soldier* APC_Pop(APC* apc)
 	return NULL;
 }
 
+int Get_Num_Soldiers(APC* a) {
+	if (a == NULL) {
+		printf(ARG_ERR_MSG);
+		return -1;
+	}
+	return a->soldiers_num;
+}
 
-bool APC_Compare_Func(PKey ID1, PKey ID2)
-{
-	return !strcmp((char*)ID1, (char*)ID2);
+bool APC_Valid_ID(char* ID) {
+	if (ID == NULL || ID[0] != 'A' || strlen(ID + 1) != LENGTH_OF_NUMS)
+		return false;
+	return true;
 }
-void APC_Destroy_Func(PElem pElem)
+
+char* APC_Get_ID(APC* a)
 {
-	APC* a = (APC*)pElem;
-	APC_Delete(a);
-	return;
-}
-PElem APC_Clone_Func(PElem pElem)
-{
-	APC* a = (APC*)pElem;
-	a = APC_Duplicate(a);
-	return a;
-}
-void APC_Print_Func(PElem pElem)
-{
-	APC* a = (APC*)pElem;
-	APC_Print(a);
-	return;
-}
-PKey APC_Get_Key_Function(PElem pElem)
-{
-	APC* a = (APC*)pElem;
+	if (a == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	return a->ID;
 }
-
