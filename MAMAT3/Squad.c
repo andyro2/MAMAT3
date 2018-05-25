@@ -86,10 +86,6 @@ PSquad Squad_Duplicate(PSquad Squad) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	 // why not squad->Soldiers ???
-	//PList Soldiers = Squad_Get_Soldiers(Squad);
-	/*PList APCs = Squad_Get_APCs(Squad);
-	PSquad New_Squad = Squad_Create(Squad->ID, */ //why not soldiers->clone_func ??!?!?!?
 	PList Soldiers = Squad->Soldiers;
 	PList APCs = Squad->APCs;
 	PSquad New_Squad = Squad_Create(Squad->ID,
