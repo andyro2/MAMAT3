@@ -13,7 +13,7 @@ PSquad Squad_Create(char*,
 	CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, GET_KEY_FUNC);
 
 void Squad_Delete(PSquad squad);
-void Squad_print(PSquad squad);
+void Squad_Print(PSquad squad);
 Result Squad_Add_Soldier(PSquad squad, char* pos, char* ID);
 PSquad Squad_Duplicate(PSquad);
 Result Squad_Add_APC(PSquad squad, char* ID);

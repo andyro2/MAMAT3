@@ -1,5 +1,4 @@
 #include "Soldier.h"
-#include "List.h"
 
 
 struct Soldier_ {

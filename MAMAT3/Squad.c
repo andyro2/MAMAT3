@@ -16,7 +16,7 @@ PSquad Squad_Create(char* ID,
 	, CLONE_FUNC clone_func_apc, DESTROY_FUNC destroy_func_apc, COMPARE_KEYS_FUNC comp_keys_func_apc, PRINT_FUNC print_func_apc, GET_KEY_FUNC get_key_func_apc)
 {
 	PSquad s;
-	if (ID == NULL || !Squad_Valid_ID(ID))
+	if (!Squad_Valid_ID(ID))
 	{
 		printf(ARG_ERR_MSG);
 		return NULL;

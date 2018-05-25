@@ -1,6 +1,5 @@
 #include "APC.h"
 #include "Soldier.h"
-#include "List.h"
 
 struct APC_ {
 	soldier* soldiers[APC_MAX_SOLDIERS];
