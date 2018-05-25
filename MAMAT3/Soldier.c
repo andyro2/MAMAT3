@@ -9,7 +9,8 @@ struct Soldier_ {
 soldier* Soldier_Create(char* ID, char* pos)
 {
 	soldier* s;
-	if (ID == NULL || pos == NULL) {
+	if (!Soldier_Valid_ID_Pos(ID, pos))
+	{
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}

@@ -89,14 +89,13 @@ PSquad Squad_Duplicate(PSquad Squad) {
 	 // why not squad->Soldiers ???
 	//PList Soldiers = Squad_Get_Soldiers(Squad);
 	/*PList APCs = Squad_Get_APCs(Squad);
-	PSquad New_Squad = Squad_Create(Squad->ID, List_Get_Clone_Func(Soldiers), List_Get_Des_Func(Soldiers), List_Get_Cmp_Func(Soldiers), List_Get_Print_Func(Soldiers),
-		List_Get_Clone_Func(APCs), List_Get_Des_Func(APCs), List_Get_Cmp_Func(APCs), List_Get_Print_Func(APCs));*/ //why not soldiers->clone_func ??!?!?!?
+	PSquad New_Squad = Squad_Create(Squad->ID, */ //why not soldiers->clone_func ??!?!?!?
 	PList Soldiers = Squad->Soldiers;
 	PList APCs = Squad->APCs;
 	PSquad New_Squad = Squad_Create(Squad->ID,
-		Soldier_Clone_Func, Soldier_Destroy_Func, Soldier_Compare_Func, Soldier_Print_Func, Soldier_Get_Key_Function,
-		APC_Clone_Func, APC_Destroy_Func, APC_Compare_Func, APC_Print_Func, APC_Get_Key_Function);
-	
+		List_Get_Clone_Func(Soldiers), List_Get_Des_Func(Soldiers), List_Get_Cmp_Func(Soldiers), List_Get_Print_Func(Soldiers),
+		List_Get_Get_Key_Func(Soldiers), List_Get_Clone_Func(APCs), List_Get_Des_Func(APCs), List_Get_Cmp_Func(APCs),
+		List_Get_Print_Func(APCs), List_Get_Get_Key_Func(APCs));
 	
 	if (New_Squad == NULL) {
 		return NULL;

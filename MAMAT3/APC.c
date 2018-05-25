@@ -10,10 +10,10 @@ struct APC_ {
 APC* APC_Create(char* ID)
 {
 	APC* apc;
-	if (ID == NULL) {
+	if (!APC_Valid_ID(ID))
+	{
 		printf(ARG_ERR_MSG);
 		return NULL;
-	}
 
 	apc = (APC*)malloc(sizeof(APC));
 	if (apc == NULL) {
