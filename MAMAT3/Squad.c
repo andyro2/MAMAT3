@@ -115,7 +115,6 @@ Result Squad_Add_Soldier(PSquad squad, char* pos, char* ID)
 	r = List_Add_Elem(squad->Soldiers, s);
 	if (r == SUCCESS) {
 		squad->Count++;
-		return r;
 	}
 	return r;
 }
@@ -190,9 +189,9 @@ Result Squad_Delete_APC(PSquad squad, char* apc_ID)
 		return FAILURE;
 
 	int solds_in_apc = Get_Num_Soldiers(a);
-	r = List_Remove_Elem(squad->APCs, apc_ID);
+	r = List_Remove_Elem(squad->APCs, apc_ID); 
 	if (r == SUCCESS) {
-		squad->Count = squad->Count - solds_in_apc;
+		squad->Count = squad->Count - solds_in_apc; //"Kills" all soldiers in APC
 		return r;
 	}
 	return r;
