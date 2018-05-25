@@ -202,3 +202,28 @@ PElem List_Get_Elem(PList l, PKey key)
 	}
 	return NULL;
 }
+
+CLONE_FUNC List_Get_Clone_Func(PList list)
+{
+	return list->clone_func;
+}
+
+DESTROY_FUNC List_Get_Des_Func(PList list)
+{
+	return list->destroy_func;
+}
+
+COMPARE_KEYS_FUNC List_Get_Cmp_Func(PList list)
+{
+	return list->comp_keys_func;
+}
+
+PRINT_FUNC List_Get_Print_Func(PList list)
+{
+	return list->print_func;
+}
+
+GET_KEY_FUNC List_Get_Get_Key_Func(PList list)
+{
+	return list->get_key_func;
+}

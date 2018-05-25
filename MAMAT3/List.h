@@ -33,4 +33,14 @@ void List_Duplicate(PList, PList); /*Duplicates all Elements from Origin List to
 
 PElem List_Get_Elem(PList, PKey); /*Returns Element from List corresponding to Key, NULL if doesnt exist*/
 
+CLONE_FUNC List_Get_Clone_Func(PList list);
+
+DESTROY_FUNC List_Get_Des_Func(PList list);
+
+COMPARE_KEYS_FUNC List_Get_Cmp_Func(PList list);
+
+PRINT_FUNC List_Get_Print_Func(PList list);
+
+GET_KEY_FUNC List_Get_Get_Key_Func(PList list);
+
 #endif
