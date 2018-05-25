@@ -56,7 +56,7 @@ void Squad_Delete(PSquad squad)
 	return;
 }
 
-void Squad_print(PSquad squad)
+void Squad_Print(PSquad squad)
 {
 	if (squad == NULL)
 	{
@@ -65,9 +65,9 @@ void Squad_print(PSquad squad)
 	}
 	printf("Squad: %s , Total troops: %d\n", squad->ID, squad->Count);
 	printf("APCs:\n");
-	List_print(squad->APCs);
+	List_Print(squad->APCs);
 	printf("Soldiers:\n");
-	List_print(squad->Soldiers);
+	List_Print(squad->Soldiers);
 }
 
 
@@ -107,7 +107,7 @@ Result Squad_Add_Soldier(PSquad squad, char* pos, char* ID)
 	}
 	//PList sol = List_Create(Soldier_Clone_Func, Soldier_Destroy_Func, Soldier_Compare_Func, Soldier_Print_Func, Soldier_Get_Key_Function);
 	soldier* s = Soldier_Create(ID, pos);//TODO needs to be done without soldier struct (? or not ? ) 
-	return (List_Add_Elem(squad->Soldiers, s);
+	return List_Add_Elem(squad->Soldiers, s);
 }
 
 Result Squad_Add_APC(PSquad squad, char* ID)
@@ -161,7 +161,10 @@ Result Squad_Delete_Soldier(PSquad squad, char* sol_ID)
 
 }
 
-
+Result Squad_Delete_APC(PSquad squad, char* apc_ID)
+{
+	return;
+}
 
 
 
@@ -178,13 +181,6 @@ void Squad_Print_Func(PElem Data) {
 	Squad_Print((PSquad)Data);
 }
 
-CLONE_FUNC List_Get_Clone_Func(PList Plist)
-{
-	if (Plist == NULL) {
-		printf(ARG_ERR_MSG);
-		return NULL;
-	}
-}
 
 
 

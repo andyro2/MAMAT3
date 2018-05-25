@@ -29,7 +29,7 @@ PElem List_Get_First(PList); /*Returns 1st Element of the List*/
 
 PElem List_Get_Next(PList); /*Returns next Element of the List, NULL if end of List*/
 
-void List_Duplicte(PList, PList); /*Duplicates all Elements from Origin List to Empty Destination List*/
+void List_Duplicate(PList, PList); /*Duplicates all Elements from Origin List to Empty Destination List*/
 
 PElem List_Get_Elem(PList, PKey); /*Returns Element from List corresponding to Key, NULL if doesnt exist*/
 

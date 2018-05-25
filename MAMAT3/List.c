@@ -163,7 +163,7 @@ PElem List_Get_Next(PList l)
 	return n->elem;
 }
 
-void List_Duplicte(PList l_exist, PList l_new)
+void List_Duplicate(PList l_exist, PList l_new)
 {
 	PElem new;
 	Node* currNode, *prevNode;
