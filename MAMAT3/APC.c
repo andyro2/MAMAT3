@@ -67,7 +67,7 @@ APC* APC_Duplicate(APC* apc)
 		new_apc->soldiers[i] = Soldier_Duplicate(apc->soldiers[i]);
 		new_apc->soldiers_num++;
 	}
-	return apc;
+	return new_apc;
 }
 
 Result APC_Insert_Soldier(APC* apc, soldier* sold)
