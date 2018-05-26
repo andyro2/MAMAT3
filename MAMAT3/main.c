@@ -33,7 +33,7 @@ void main()
 	int Args_Num;											// number of arguments in current command
 	char* Curr_Command_Index;								//	will hold the current command index
 	char* Command_Arguments[MAX_ARG];						//	all command's arguments after strtok completed.
-	int command_index;
+	//int command_index;
 
 	//char szLine[MAX_LINE_SIZE];		//char* delimiters = " []\t\n";
 

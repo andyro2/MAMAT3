@@ -22,6 +22,7 @@ Result Squad_APC_Pop(PSquad squad, char* apc_ID);
 Result Squad_Delete_Soldier(PSquad squad, char* sol_ID);
 Result Squad_Delete_APC(PSquad, char*);
 bool Squad_Valid_ID(char*);
+char* Squad_Get_ID(PSquad);
 
 /*User Functions*/
 
