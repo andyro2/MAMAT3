@@ -85,7 +85,12 @@ int WarZone_Raise_Alert(PWZ war_zone)
 		return new_alertness;
 	}
 	war_zone->alertness = new_alertness;
-	return new_alertness
+	return new_alertness;
+}
+
+char* WarZone_Get_ID(PWZ wz)
+{
+		return wz->ID;
 }
 
 /* Squad Functions */

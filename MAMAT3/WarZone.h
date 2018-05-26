@@ -13,4 +13,6 @@ void WarZone_Print(PWZ);
 PWZ WarZone_Duplicate(PWZ);
 int WarZone_Raise_Alert(PWZ);
 
+char* WarZone_Get_ID(PWZ);
+
 #endif

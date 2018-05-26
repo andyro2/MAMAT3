@@ -5,7 +5,8 @@
 #include "APC.h"
 #include "List.h"
 #include "Squad.h"
-//#include "Warzone.h"
+#include "Warzone.h"
+#include "Battlefield.h"
 
 #define MAX_LINE_SIZE 256
 
@@ -33,7 +34,9 @@ void main()
 	int Args_Num;											// number of arguments in current command
 	char* Curr_Command_Index;								//	will hold the current command index
 	char* Command_Arguments[MAX_ARG];						//	all command's arguments after strtok completed.
-	//int command_index;
+	int command_index;
+	//int inner_loop = 1;
+	PBf battlefield = NULL;
 
 	//char szLine[MAX_LINE_SIZE];		//char* delimiters = " []\t\n";
 
@@ -44,35 +47,69 @@ void main()
 		strcpy(Input_Line_Copy, Input_Line);						//making backup of input line (going to use strtok)
 		Curr_Command_Index = strtok(Input_Line_Copy, delimiters);	//getting the index of current command - copied string Changed!
 		Args_Num = 0;
-		while () {
+		while (1) {
 			Command_Arguments[Args_Num] = strtok(NULL, delimiters);
+			if (Command_Arguments[Args_Num] == NULL) {
+				Args_Num++;
+				break;
+			}
 			Args_Num++;
 		}
 		
-
-
-																	
-		/*if (strlen(Curr_Command_Index) == 1) {
-			num = atoi(Curr_Command_Index);
-			if (num == 0)	fprintf(stderr, "Error: Illegal Command\n");
-			Curr_Command_Index = strtok(NULL, delimiters);
-		}*/
 																	/**Cases according to command's index**/
-
-		if (!strcmp(Curr_Command_Index, "Exit") {
-			WarZone_Delete(warzone);
+		
+		if (!strcmp(Curr_Command_Index, "Exit")) {
+			if (battlefield == NULL)
+				fprintf(stderr, "Error: No Battlefield\n");
+			else
+				Battlefield_Delete(battlefield);
 			return;
 		}
 																	//C.1) index is "Exe" - need to execute all commands by current order
 		else if (!strcmp(Curr_Command_Index, "Exe")) {
+			if (battlefield == NULL)
+				fprintf(stderr, "Error: No Battlefield\n");
+			else
+			{
+				Set_Command(battlefield,Command_Sort(battlefield));
+				PList currCommand = Get_Command(battlefield); 
+				while (currCommand)
+				{
+					//TODO
+				}
+			}
 
+		}
+		else if (strlen(Curr_Command_Index) == 1) { //collect valid executions
 
+			command_index = atoi(Curr_Command_Index);
+			if (command_index == 0)	
+				fprintf(stderr, "Error: Illegal Command\n");
+			else
+			{
+				if ( ( (!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL) ||
+					 (	() && () ) || ( () && () )
+						 ) {//valid executions 
+				
+					if (battlefield == NULL) //battlefield yet created
+						fprintf(stderr, "Error: No Battlefield\n");
+					else
+						Add_Command(battlefield, Command_Arguments, command_index); //Command_Arguments[0]
+			}
+				else 
+					fprintf(stderr, "Error: Illegal Command\n");
+
+			
 		}
 	}
 }
 
+	// Create_B -- battlefield = Battlefield_Create(Warzone_Clone_Func, Warzone_Destroy_Func, Warzone_Compare_Func, Warzone_Print_Func, Warzone_Get_Key_Function,
+	//Command_Clone_Func, Command_Destroy_Func, Command_Compare_Func, Command_Get_Key_Function);
+	//if (battlefield == NULL)
+	//fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
 
-	while (fgets(szLine, MAX_LINE_SIZE, stdin)) {
+	/*while (fgets(szLine, MAX_LINE_SIZE, stdin)) {
 		command = strtok(szLine, delimiters);
 		
 		//name1 = strtok(NULL, delimiters);
@@ -121,39 +158,5 @@ void main()
 			fprintf(stderr, "Command not found\n");
 	}
 
-	Network_delete();
+	Network_delete();*/
 };
-
-bool Command_Compare_Func(PKey ID1, PKey ID2)
-{
-	return !strcmp((char*)ID1, (char*)ID2);
-}
-void Command_Destroy_Func(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	Soldier_Delete(s);
-	return;
-}
-PElem Command_Clone_Func(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	s = Soldier_Duplicate(s);
-	return s;
-}
-void Command_Print_Func(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	Soldier_Print(s);
-	return;
-}
-PKey Command_Get_Key_Function(PElem pElem)
-{
-	soldier* s = (soldier*)pElem;
-	return s->ID;
-}
-
-
-
-
-
-
