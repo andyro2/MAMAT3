@@ -8,7 +8,7 @@ struct War_Zone_ {
 	char ID[MAX_ID_LENGTH];
 };
 
-PWZ Squad_Create(char* ID, CLONE_FUNC clone_func_sold, DESTROY_FUNC destroy_func_sold, COMPARE_KEYS_FUNC comp_keys_func_sold, PRINT_FUNC print_func_sold, GET_KEY_FUNC get_key_func_sold)
+PWZ WarZone_Create(char* ID, CLONE_FUNC clone_func_sold, DESTROY_FUNC destroy_func_sold, COMPARE_KEYS_FUNC comp_keys_func_sold, PRINT_FUNC print_func_sold, GET_KEY_FUNC get_key_func_sold)
 {
 	PWZ w;
 	if (!War_Zone_Valid_ID(ID))

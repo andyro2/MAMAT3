@@ -6,7 +6,7 @@
 
 typedef struct War_Zone_ WZ, *PWZ;
 
-PWZ Squad_Create(char*, CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, GET_KEY_FUNC);
+PWZ WarZone_Create(char*, CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, GET_KEY_FUNC);
 
 void WarZone_Delete(PWZ);
 void WarZone_Print(PWZ);

@@ -52,7 +52,6 @@ bool Squad_Valid_ID(char* ID)
 	return true;
 }
 
-
 void Squad_Delete(PSquad squad)
 {
 	if (squad == NULL) {
@@ -78,8 +77,6 @@ void Squad_Print(PSquad squad)
 	printf("Soldiers:\n");
 	List_Print(squad->Soldiers);
 }
-
-
 
 PSquad Squad_Duplicate(PSquad Squad) {
 	if (Squad == NULL) {
@@ -196,11 +193,6 @@ Result Squad_Delete_APC(PSquad squad, char* apc_ID)
 	}
 	return r;
 }
-
-
-
-
-
 
 /*User fuctions*/
 
