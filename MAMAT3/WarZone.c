@@ -85,5 +85,42 @@ int WarZone_Raise_Alert(PWZ war_zone)
 		return new_alertness;
 	}
 	war_zone->alertness = new_alertness;
-	return new_alertness
+	return new_alertness;
+}
+
+char* WarZone_Get_ID(PWZ wz)
+{
+		return wz->ID;
+}
+
+/* Squad Functions */
+
+bool Squad_Compare_Func(PKey ID1, PKey ID2)
+{
+	if (!strcmp((char*)ID1, (char*)ID2))
+		return true;
+	return false;
+}
+void Squad_Destroy_Func(PElem pElem)
+{
+	Squad* a = (Squad*)pElem;
+	Squad_Delete(a);
+	return;
+}
+PElem Squad_Clone_Func(PElem pElem)
+{
+	Squad* a = (Squad*)pElem;
+	a = Squad_Duplicate(a);
+	return a;
+}
+void Squad_Print_Func(PElem pElem)
+{
+	Squad* a = (Squad*)pElem;
+	Squad_Print(a);
+	return;
+}
+PKey Squad_Get_Key_Function(PElem pElem)
+{
+	Squad* a = (Squad*)pElem;
+	return Squad_Get_ID(a);
 }

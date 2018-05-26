@@ -204,6 +204,11 @@ void Squad_Print_Func(PElem Data) {
 	Squad_Print((PSquad)Data);
 }
 
+char* Squad_Get_ID(PSquad sq)
+{
+	return sq->ID;
+}
+
 /* Soldier Functions*/
 
 bool Soldier_Compare_Func(PKey ID1, PKey ID2)
