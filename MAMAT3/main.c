@@ -14,8 +14,8 @@
 void main()
 {
 	/* Command List Construction */
-
-	PList Commands_List = List_Create(/**********/); // Complete here...
+	/*
+	PList Commands_List = List_Create(/--/); // Complete here...
 	if (Commands_List == NULL) {
 		printf("Program Init Error\n");
 		return EXIT_FAILURE;
@@ -23,9 +23,9 @@ void main()
 
 	//2) Battlefield List
 	PList Battlefield = NULL;
-	bool Battlefield_Created = false;
-	bool ended = false;
-
+	
+	
+	*/
 	//3) /**STRTOK**
 	/**Need two copies of program's input line: one for each strtok.(because strtok changes it's input string)**/
 	char Input_Line[MAX_INPUT_LINE] = { 0 };				// stores program's input line by line
@@ -35,76 +35,119 @@ void main()
 	char* Curr_Command_Index;								//	will hold the current command index
 	char* Command_Arguments[MAX_ARG];						//	all command's arguments after strtok completed.
 	int command_index;
-	//int inner_loop = 1;
 	PBf battlefield = NULL;
+	bool ended = false;
+	bool Battlefield_Created = false;
 
 	//char szLine[MAX_LINE_SIZE];		//char* delimiters = " []\t\n";
 
-	/* Command Proccessing */
+/* Command Proccessing */
 
-	while (!ended) {												//program didnt end
-		fgets(Input_Line, MAX_INPUT_LINE, stdin);					//scan next input line
-		strcpy(Input_Line_Copy, Input_Line);						//making backup of input line (going to use strtok)
-		Curr_Command_Index = strtok(Input_Line_Copy, delimiters);	//getting the index of current command - copied string Changed!
-		Args_Num = 0;
-		while (1) {
-			Command_Arguments[Args_Num] = strtok(NULL, delimiters);
-			if (Command_Arguments[Args_Num] == NULL) {
-				Args_Num++;
-				break;
-			}
+while (!ended) {												//program didnt end
+	fgets(Input_Line, MAX_INPUT_LINE, stdin);					//scan next input line
+	strcpy(Input_Line_Copy, Input_Line);						//making backup of input line (going to use strtok)
+	Curr_Command_Index = strtok(Input_Line_Copy, delimiters);	//getting the index of current command - copied string Changed!
+	Args_Num = 0;
+	while (1) {
+		Command_Arguments[Args_Num] = strtok(NULL, delimiters);
+		if (Command_Arguments[Args_Num] == NULL) {
 			Args_Num++;
+			break;
 		}
-		
-																	/**Cases according to command's index**/
-		
-		if (!strcmp(Curr_Command_Index, "Exit")) {
-			if (battlefield == NULL)
-				fprintf(stderr, "Error: No Battlefield\n");
-			else
-				Battlefield_Delete(battlefield);
-			return;
-		}
-																	//C.1) index is "Exe" - need to execute all commands by current order
-		else if (!strcmp(Curr_Command_Index, "Exe")) {
-			if (battlefield == NULL)
-				fprintf(stderr, "Error: No Battlefield\n");
-			else
+		Args_Num++;
+	}
+
+	/**Cases according to command's index**/
+
+	if (!strcmp(Curr_Command_Index, "Exit")) {
+		if (!Battlefield_Created)
+			fprintf(stderr, "Error: No Battlefield\n");
+		else
+			Battlefield_Delete(battlefield);
+		return;
+	}
+	//C.1) index is "Exe" - need to execute all commands by current order
+	else if (!strcmp(Curr_Command_Index, "Exe")) {
+		if (!Battlefield_Created)
+			fprintf(stderr, "Error: No Battlefield\n");
+		else
+		{
+			Set_Command(battlefield, Command_Sort(battlefield));
+			PCommand currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
+			//int commands_num = Get_Command_Num(battlefield);
+			char* currArgs0, *currArgs1, *currArgs2, *currArgs3, *currArgs4;
+			while (currCommand)
 			{
-				Set_Command(battlefield,Command_Sort(battlefield));
-				PList comList = Get_Command(battlefield); 
-				PCommand currCommand;
-				char* currArgs0,* currArgs1,* currArgs2,* currArgs3,* currArgs4;
-				while (comList)
+				currArgs0 = Command_Get_Arg(currCommand, 0);
+				currArgs1 = Command_Get_Arg(currCommand, 1);
+				currArgs2 = Command_Get_Arg(currCommand, 2);
+				currArgs3 = Command_Get_Arg(currCommand, 3);
+				currArgs4 = Command_Get_Arg(currCommand, 4);
+				if ((!strcmp(currArgs0, "Create_B")) && (currArgs1 == NULL))
 				{
-					currCommand = (PCommand)List_Get_First(comList);
-					currArgs0 = Command_Get_Arg(currCommand, 0);
-					currArgs1 = Command_Get_Arg(currCommand, 1);
-					currArgs2 = Command_Get_Arg(currCommand, 2);
-					currArgs3 = Command_Get_Arg(currCommand, 3);
-					currArgs4 = Command_Get_Arg(currCommand, 4);
-					if ((!strcmp(currArgs0, "Create_B")) && (currArgs1 == NULL))
-					{
-						battlefield = Battlefield_Create(Warzone_Clone_Func, Warzone_Destroy_Func, Warzone_Compare_Func, Warzone_Print_Func, Warzone_Get_Key_Function,
+					battlefield = Battlefield_Create(Warzone_Clone_Func, Warzone_Destroy_Func, Warzone_Compare_Func, Warzone_Print_Func, Warzone_Get_Key_Function,
 						Command_Clone_Func, Command_Destroy_Func, Command_Compare_Func, Command_Get_Key_Function);
-						if (battlefield == NULL)
-							fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
-						Battlefield_Created = true;
-					}
-					else if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
-					{
-						Battlefield_Add_WarZone(battlefield, currArgs1);
-					}
-					else if ((!strcmp(Command_Arguments[0], "Del_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL))
-					{
-
-					}
-
-
-					//TODO
-					//Delete_Command(battlefield, currCommand);
+					if (battlefield == NULL)
+						fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
+					Battlefield_Created = true;
 				}
+				else if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+					Battlefield_Add_WarZone(battlefield, currArgs1);
+				else if ((!strcmp(Command_Arguments[0], "Del_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL))
+					Battlefield_Del_WarZone(battlefield, currArgs1);
+				else if ((!strcmp(Command_Arguments[0], "R_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL))
+					if (Battlefield_Emergency_WarZone(battlefield, currArgs1))
+					{
+						//TODO Emergency
+					}
+				else if ((!strcmp(Command_Arguments[0], "Add_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL))
+					{
+					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+					if (warzone == NULL)
+						break;
+					
+					//TODO
+					}
+				else if ((!strcmp(Command_Arguments[0], "Del_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "M_Sq")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "Add_Sold")) && (Command_Arguments[5] == NULL) && (Command_Arguments[4] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "Del_Sold")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "Add_APC")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "Del_APC")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "Sold_Insert")) && (Command_Arguments[5] == NULL) && (Command_Arguments[4] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "APC_Pop")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
+				{
+
+				}
+				else if ((!strcmp(Command_Arguments[0], "Print")) && (Command_Arguments[1] == NULL))
+				{
+
+				}	
+				Delete_Command(battlefield, currCommand);
+				currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
 			}
+		}
 
 		}
 		else if (strlen(Curr_Command_Index) == 1) { //collect valid executions
@@ -130,7 +173,7 @@ void main()
 					((!strcmp(Command_Arguments[0], "Print")) && (Command_Arguments[1] == NULL)))
 						  {//valid executions 
 				
-					if (battlefield == NULL) //battlefield yet created
+					if (!Battlefield_Created) //battlefield yet created
 						fprintf(stderr, "Error: No Battlefield\n");
 					else
 						Add_Command(battlefield, Command_Arguments, command_index); //Command_Arguments[0]

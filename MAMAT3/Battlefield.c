@@ -34,7 +34,8 @@ PBf Battlefield_Create(CLONE_FUNC clone_func_warzone, DESTROY_FUNC destroy_func_
 	if (bf == NULL)
 	{
 		free(bf);
-		printf(MALLOC_ERR_MSG);
+		//printf(MALLOC_ERR_MSG);
+		printf("Program Init Error\n");
 		return NULL;
 	}
 	bf->warzones = List_Create(clone_func_warzone, destroy_func_warzone, comp_keys_func_warzone, print_func_warzone, get_key_func_warzone);
@@ -83,13 +84,31 @@ void Battlefield_Add_WarZone(PBf bf, char* wz)
 	return;
 }
 
-void Battlefield_Add_WarZone(PBf bf, char* wz)
+void Battlefield_Del_WarZone(PBf bf, char* wz)
 {
 	if (List_Get_Elem(bf->warzones, wz) == NULL)
 		fprintf(stderr, "Error: No Such War Zone\n");
 	else
 		List_Remove_Elem(bf->warzones, wz);
 	return;
+}
+
+bool Battlefield_Emergency_WarZone(PBf bf, char* wz)
+{
+	PWZ warzone = (PWZ)List_Get_Elem(bf->warzones, wz);
+	if (warzone == NULL)
+		fprintf(stderr, "Error: No Such War Zone\n");
+	else if (WarZone_Raise_Alert(warzone) == 3)
+		return true;
+	return false;
+}
+
+PWZ Battlefield_Get_WarZone(PBf bf, char* wz)
+{
+	PWZ warzone = (PWZ)List_Get_Elem(bf->warzones, wz);
+	if (warzone == NULL)
+		fprintf(stderr, "Error: No Such War Zone\n");
+	return warzone;
 }
 /**User Functions**/
 
@@ -122,6 +141,11 @@ void Set_Command(PBf bf, PList commands)
 	List_Duplicate(new_commands, commands);
 	bf->commands = new_commands;
 	return;
+}
+
+int Get_Command_Num(PBf bf)
+{
+	return bf->commands;
 }
 
 /* WarZone Functions*/

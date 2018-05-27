@@ -11,14 +11,17 @@ typedef struct Command_ Command, *PCommand;
 PBf Battlefield_Create(CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, GET_KEY_FUNC,
 					   CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, GET_KEY_FUNC);
 void Battlefield_Delete(PBf);
-void Battlefield_Add_WarZone(PBf bf, char* wz);
-
+void Battlefield_Add_WarZone(PBf, char*);
+void Battlefield_Del_WarZone(PBf, char*);
+bool Battlefield_Emergency_WarZone(PBf, char*);
+PWZ Battlefield_Get_WarZone(PBf, char*);
 
 void Add_Command(PBf, char*, int);
 void Delete_Command(PBf, PCommand);
 PList Command_Sort(PBf);
 PList Get_Command(PBf);
 void Set_Command(PBf, PList);
+int Get_Command_Num(PBf);
 
 /* Warzone Functions*/
 bool Warzone_Compare_Func(PKey, PKey);
