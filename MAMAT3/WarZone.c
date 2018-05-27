@@ -114,6 +114,19 @@ void WarZone_Add_Squad(PWZ wz, char* squad_ID)
 	return;
 }
 
+void WarZone_Remove_Squad(PWZ wz, char* squad_ID)
+{
+	PList squad = List_Get_Elem(wz, squad_ID);
+	if (squad == NULL) {
+		printf("Error: No Such Squad");
+		return;
+	}
+	if (List_Remove_Elem(wz, squad_ID) == FAILURE) {
+		printf("Error: Squad Already Exists");
+		return;
+	}
+	return;
+}
 /* Squad Functions */
 
 bool Squad_Compare_Func(PKey ID1, PKey ID2)
