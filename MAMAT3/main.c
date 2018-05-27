@@ -110,7 +110,7 @@ while (!ended) {												//program didnt end
 					}
 				else if ((!strcmp(Command_Arguments[0], "Del_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL))
 				{
-
+					//TODO
 				}
 				else if ((!strcmp(Command_Arguments[0], "M_Sq")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
 				{
