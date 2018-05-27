@@ -103,22 +103,43 @@ while (!ended) {												//program didnt end
 				else if ((!strcmp(Command_Arguments[0], "Add_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL))
 					{
 					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL)
+					if (warzone == NULL) {
+						fprintf(stderr, "Error: No Such War Zone\n");
 						break;
-					
-					//TODO
+					}
+					WarZone_Add_Squad(warzone, Command_Arguments[1]);
 					}
 				else if ((!strcmp(Command_Arguments[0], "Del_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL))
 				{
-					//TODO
+					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+					if (warzone == NULL) {
+						fprintf(stderr, "Error: No Such War Zone\n");
+						break;
+					}
+					WarZone_Remove_Squad(warzone, Command_Arguments[1]);
 				}
-				else if ((!strcmp(Command_Arguments[0], "M_Sq")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
+				else if ((!strcmp(Command_Arguments[0], "M_Sq")) && (Command_Arguments[4] == NULL))
 				{
-
+					PWZ origin_w = Battlefield_Get_WarZone(battlefield, currArgs1);
+					PWZ dest_w = Battlefield_Get_WarZone(battlefield, currArgs2);
+					if (origin_w == NULL) {
+						fprintf(stderr, "Error: No Such Origin War Zone\n");
+						break;
+					}
+					if (dest_w == NULL) {
+						fprintf(stderr, "Error: No Such Dest War Zone\n");
+						break;
+					}
+					WarZone_Move_Squad(origin_w, dest_w, Command_Arguments[3]);
 				}
-				else if ((!strcmp(Command_Arguments[0], "Add_Sold")) && (Command_Arguments[5] == NULL) && (Command_Arguments[4] != NULL))
+				else if ((!strcmp(Command_Arguments[0], "Add_Sold")) && (Command_Arguments[4] == NULL))
 				{
-
+					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+					if (warzone == NULL) {
+						fprintf(stderr, "Error: No Such War Zone\n");
+						break;
+					}
+					WarZone_Add_Soldier(warzone, Command_Arguments[2], Command_Arguments[3], Command_Arguments[4]);
 				}
 				else if ((!strcmp(Command_Arguments[0], "Del_Sold")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL))
 				{

@@ -128,6 +128,29 @@ void WarZone_Remove_Squad(PWZ wz, char* squad_ID)
 	}
 	return;
 }
+
+void WarZone_Move_Squad(PWZ origin_w, PWZ dest_w, char* squad_ID)
+{
+	PList squad = List_Get_Elem(origin_w->squads, squad_ID);
+	if (squad == NULL) {
+		printf("Error: No Such Squad");
+		return;
+	}
+	List_Remove_Elem(origin_w->squads, squad_ID);
+	List_Add_Elem(dest_w->squads, squad_ID);
+}
+
+void WarZone_Add_Soldier(PWZ wz, char* sq_ID, char* sol_ID, char* pos) {
+	PList squad = List_Get_Elem(wz->squads, sq_ID);
+	if (squad == NULL) {
+		printf("Error: No Such Squad");
+		return;
+	}
+	// Can't reach internal field of squad
+	if(Squad_Add_Soldier((PSquad)squad, pos, sol_ID) == FAILURE) // not sure
+		printf("Error: No Such Squad");
+	return;
+}
 /* Squad Functions */
 
 bool Squad_Compare_Func(PKey ID1, PKey ID2)

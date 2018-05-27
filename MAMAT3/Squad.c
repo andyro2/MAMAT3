@@ -194,6 +194,13 @@ Result Squad_Delete_APC(PSquad squad, char* apc_ID)
 	return r;
 }
 
+soldier* Get_Soldier(PList squad, char* sol_ID)
+{
+	if (sol_ID == NULL)
+		return NULL;
+	
+}
+
 /*User fuctions*/
 
 void Squad_Print_Func(PElem Data) {
