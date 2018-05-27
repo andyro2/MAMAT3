@@ -75,7 +75,7 @@ void main()
 				PList currCommand = Get_Command(battlefield); 
 				while (currCommand)
 				{
-					//TODO
+					//TODO Apply_Command(battelfield, currCommand);
 				}
 			}
 
