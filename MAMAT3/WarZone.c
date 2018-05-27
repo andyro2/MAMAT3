@@ -47,7 +47,7 @@ void WarZone_Delete(PWZ WarZone) {
 		printf(ARG_ERR_MSG);
 		return;
 	}
-	ListDestroy(WarZone->squads);
+	List_Delete(WarZone->squads);
 	free(WarZone);
 }
 
@@ -57,7 +57,7 @@ void WarZone_Print(PWZ WarZone) {
 		return;
 	}
 	printf("WarZone: %s , Alert State: %d\n\n", WarZone->ID, WarZone->alertness);
-	ListPrint(WarZone->squads);
+	List_Print(WarZone->squads);
 }
 
 PWZ WarZone_Duplicate(PWZ war_zone) 
