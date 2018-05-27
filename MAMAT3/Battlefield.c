@@ -1,5 +1,6 @@
 #include "Battlefield.h"
 #include "defs.h"
+#include "WarZone.h"
 
 
 struct Battlefield_ {
@@ -61,7 +62,7 @@ PList Command_Sort(PBf bf) //bf !NULL
 void Battlefield_Delete(PBf bf) //bf !NULL
 {
 	if (bf == NULL) {
-		printf(ARG_ERR_MSG);
+		//printf(ARG_ERR_MSG);
 		return;
 	}
 	List_Delete(bf->warzones);
@@ -70,7 +71,28 @@ void Battlefield_Delete(PBf bf) //bf !NULL
 	return;
 } 
 
+void Battlefield_Add_WarZone(PBf bf, char* wz)
+{
+	if (List_Get_Elem(bf->warzones,wz) != NULL)
+		fprintf(stderr, "Error: War Zone Already Exists\n");
+	else
+	{
+		PWZ warzone = WarZone_Create(wz, Squad_Clone_Func, Squad_Destroy_Func, Squad_Compare_Func, Squad_Print_Func, Squad_Get_Key_Function);
+		List_Add_Elem(bf->warzones, warzone);
+	}
+	return;
+}
+
+void Battlefield_Add_WarZone(PBf bf, char* wz)
+{
+	if (List_Get_Elem(bf->warzones, wz) == NULL)
+		fprintf(stderr, "Error: No Such War Zone\n");
+	else
+		List_Remove_Elem(bf->warzones, wz);
+	return;
+}
 /**User Functions**/
+
 
 void Add_Command(PBf bf, char* args, int index)
 {
@@ -178,6 +200,11 @@ PCommand Command_Duplicate(PCommand exist_command)
 char* Command_Get_Index(PCommand c)
 {
 	return c->command_index;
+}
+
+char* Command_Get_Arg(PCommand c, int i)
+{
+	return c->Command_Arguments[i];
 }
 
 bool Command_Compare_Func(PKey ID1, PKey ID2)

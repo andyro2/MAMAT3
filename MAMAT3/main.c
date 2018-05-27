@@ -72,10 +72,37 @@ void main()
 			else
 			{
 				Set_Command(battlefield,Command_Sort(battlefield));
-				PList currCommand = Get_Command(battlefield); 
-				while (currCommand)
+				PList comList = Get_Command(battlefield); 
+				PCommand currCommand;
+				char* currArgs0,* currArgs1,* currArgs2,* currArgs3,* currArgs4;
+				while (comList)
 				{
+					currCommand = (PCommand)List_Get_First(comList);
+					currArgs0 = Command_Get_Arg(currCommand, 0);
+					currArgs1 = Command_Get_Arg(currCommand, 1);
+					currArgs2 = Command_Get_Arg(currCommand, 2);
+					currArgs3 = Command_Get_Arg(currCommand, 3);
+					currArgs4 = Command_Get_Arg(currCommand, 4);
+					if ((!strcmp(currArgs0, "Create_B")) && (currArgs1 == NULL))
+					{
+						battlefield = Battlefield_Create(Warzone_Clone_Func, Warzone_Destroy_Func, Warzone_Compare_Func, Warzone_Print_Func, Warzone_Get_Key_Function,
+						Command_Clone_Func, Command_Destroy_Func, Command_Compare_Func, Command_Get_Key_Function);
+						if (battlefield == NULL)
+							fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
+						Battlefield_Created = true;
+					}
+					else if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+					{
+						Battlefield_Add_WarZone(battlefield, currArgs1);
+					}
+					else if ((!strcmp(Command_Arguments[0], "Del_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL))
+					{
+
+					}
+
+
 					//TODO
+					//Delete_Command(battlefield, currCommand);
 				}
 			}
 
@@ -87,9 +114,21 @@ void main()
 				fprintf(stderr, "Error: Illegal Command\n");
 			else
 			{
-				if ( ( (!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL) ||
-					 (	() && () ) || ( () && () )
-						 ) {//valid executions 
+				if (((!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL)) ||
+					((!strcmp(Command_Arguments[0], "Add_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Del_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "R_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Add_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Del_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "M_Sq")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Add_Sold")) && (Command_Arguments[5] == NULL) && (Command_Arguments[4] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Del_Sold")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Add_APC")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Del_APC")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Sold_Insert")) && (Command_Arguments[5] == NULL) && (Command_Arguments[4] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "APC_Pop")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL)) ||
+					((!strcmp(Command_Arguments[0], "Print")) && (Command_Arguments[1] == NULL)))
+						  {//valid executions 
 				
 					if (battlefield == NULL) //battlefield yet created
 						fprintf(stderr, "Error: No Battlefield\n");
@@ -104,10 +143,6 @@ void main()
 	}
 }
 
-	// Create_B -- battlefield = Battlefield_Create(Warzone_Clone_Func, Warzone_Destroy_Func, Warzone_Compare_Func, Warzone_Print_Func, Warzone_Get_Key_Function,
-	//Command_Clone_Func, Command_Destroy_Func, Command_Compare_Func, Command_Get_Key_Function);
-	//if (battlefield == NULL)
-	//fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
 
 	/*while (fgets(szLine, MAX_LINE_SIZE, stdin)) {
 		command = strtok(szLine, delimiters);

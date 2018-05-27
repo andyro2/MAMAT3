@@ -34,6 +34,13 @@ PWZ WarZone_Create(char* ID, CLONE_FUNC clone_func_sold, DESTROY_FUNC destroy_fu
 	return w;
 }
 
+bool War_Zone_Valid_ID(char* ID)
+{
+	if (ID == NULL)
+		return false;
+	if (ID[0] != 'W' || strlen(ID + 1) != LENGTH_OF_NUMS)
+		return false;
+}
 
 void WarZone_Delete(PWZ WarZone) {
 	if (WarZone == NULL) {
