@@ -14,7 +14,7 @@ APC* APC_Create(char* ID)
 	{
 		printf(ARG_ERR_MSG);
 		return NULL;
-
+	}
 	apc = (APC*)malloc(sizeof(APC));
 	if (apc == NULL) {
 		free(apc);
