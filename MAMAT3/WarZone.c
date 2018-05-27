@@ -34,12 +34,13 @@ PWZ WarZone_Create(char* ID, CLONE_FUNC clone_func_sold, DESTROY_FUNC destroy_fu
 	return w;
 }
 
-bool War_Zone_Valid_ID(char* ID)
+bool WarZone_Valid_ID(char* ID)
 {
 	if (ID == NULL)
 		return false;
 	if (ID[0] != 'W' || strlen(ID + 1) != LENGTH_OF_NUMS)
 		return false;
+	return true;
 }
 
 void WarZone_Delete(PWZ WarZone) {
@@ -67,7 +68,7 @@ PWZ WarZone_Duplicate(PWZ war_zone)
 		return NULL;
 	}
 	PList squad = war_zone->squads;
-	PWZ new_war_zone = War_Zone_Create(war_zone->ID,
+	PWZ new_war_zone = WarZone_Create(war_zone->ID,
 		List_Get_Clone_Func(war_zone), List_Get_Des_Func(war_zone), List_Get_Cmp_Func(war_zone), List_Get_Print_Func(war_zone),
 		List_Get_Get_Key_Func(war_zone));
 
@@ -83,7 +84,7 @@ int WarZone_Raise_Alert(PWZ war_zone)
 {
 	if (war_zone == NULL) {
 		printf(ARG_ERR_MSG);
-		return;
+		return -1;
 	}
 	int new_alertness = war_zone->alertness + 1;
 	if (new_alertness == 3)
@@ -102,12 +103,12 @@ char* WarZone_Get_ID(PWZ wz)
 
 void WarZone_Add_Squad(PWZ wz, char* squad_ID)
 {
-	PList squad = List_Get_Elem(wz, squad_ID);
+	PList squad = List_Get_Elem(wz->squads, squad_ID);
 	if (squad  == NULL) {
 		printf("Error: No Such Squad");
 		return;
 	}
-	if (List_Add_Elem(wz, squad_ID) == FAILURE) {
+	if (List_Add_Elem(wz->squads, squad_ID) == FAILURE) {
 		printf("Error: Squad Already Exists");
 		return;
 	}
@@ -116,12 +117,12 @@ void WarZone_Add_Squad(PWZ wz, char* squad_ID)
 
 void WarZone_Remove_Squad(PWZ wz, char* squad_ID)
 {
-	PList squad = List_Get_Elem(wz, squad_ID);
+	PList squad = List_Get_Elem(wz->squads, squad_ID);
 	if (squad == NULL) {
 		printf("Error: No Such Squad");
 		return;
 	}
-	if (List_Remove_Elem(wz, squad_ID) == FAILURE) {
+	if (List_Remove_Elem(wz->squads, squad_ID) == FAILURE) {
 		printf("Error: Squad Already Exists");
 		return;
 	}
