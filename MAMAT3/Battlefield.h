@@ -11,6 +11,8 @@ typedef struct Command_ Command, *PCommand;
 PBf Battlefield_Create(CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, GET_KEY_FUNC,
 					   CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, GET_KEY_FUNC);
 void Battlefield_Delete(PBf);
+void Battlefield_Add_WarZone(PBf bf, char* wz);
+
 
 void Add_Command(PBf, char*, int);
 void Delete_Command(PBf, PCommand);
@@ -30,6 +32,7 @@ PCommand Command_Create(char*,int);
 void Command_Delete(PCommand);
 PCommand Command_Duplicate(PCommand);
 char* Command_Get_Index(PCommand);
+char* Command_Get_Arg(PCommand, int);
 
 bool Command_Compare_Func(PKey, PKey);
 void Command_Destroy_Func(PElem);

@@ -14,5 +14,12 @@ PWZ WarZone_Duplicate(PWZ);
 int WarZone_Raise_Alert(PWZ);
 
 char* WarZone_Get_ID(PWZ);
+bool War_Zone_Valid_ID(char* ID);
+
+bool Squad_Compare_Func(PKey ID1, PKey ID2);
+void Squad_Destroy_Func(PElem pElem);
+PElem Squad_Clone_Func(PElem pElem);
+void Squad_Print_Func(PElem pElem);
+PKey Squad_Get_Key_Function(PElem pElem);
 
 #endif
