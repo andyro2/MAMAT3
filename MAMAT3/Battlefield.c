@@ -1,6 +1,9 @@
 #include "Battlefield.h"
 #include "defs.h"
 #include "WarZone.h"
+#include "Squad.h"
+#include "Soldier.h"
+#include "APC.h"
 
 
 struct Battlefield_ {
@@ -72,6 +75,21 @@ void Battlefield_Delete(PBf bf) //bf !NULL
 	return;
 } 
 
+void Battelfield_Move_all_Squads(PWZ to_wz, PBf bf) 
+{
+	PList tmp_wz = bf->warzones;
+	while (tmp_wz != NULL) {
+		PSquad squad =(PSquad) List_Get_First(tmp_wz);
+		
+		//PWZ from_wz = (PWZ)List_Get_Elem()
+
+		while (squad != NULL) {
+			//WarZone_Move_Squad(List_Get_Elem(tmp_wz));
+		}
+
+	}
+}
+
 void Battlefield_Add_WarZone(PBf bf, char* wz)
 {
 	if (List_Get_Elem(bf->warzones,wz) != NULL)
@@ -93,6 +111,7 @@ void Battlefield_Del_WarZone(PBf bf, char* wz)
 	return;
 }
 
+/*
 bool Battlefield_Emergency_WarZone(PBf bf, char* wz)
 {
 	PWZ warzone = (PWZ)List_Get_Elem(bf->warzones, wz);
@@ -101,7 +120,7 @@ bool Battlefield_Emergency_WarZone(PBf bf, char* wz)
 	else if (WarZone_Raise_Alert(warzone) == 3)
 		return true;
 	return false;
-}
+}*/
 
 PWZ Battlefield_Get_WarZone(PBf bf, char* wz)
 {
@@ -150,33 +169,52 @@ int Get_Command_Num(PBf bf)
 
 /* WarZone Functions*/
 
-bool Warzone_Compare_Func(PKey ID1, PKey ID2)
+bool WarZone_Compare_Func(PKey ID1, PKey ID2)
 {
+	if (ID1 == NULL || ID2 == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
 	if (!strcmp((char*)ID1, (char*)ID2))
 		return true;
 	return false;
 }
-void Warzone_Destroy_Func(PElem pElem)
+void WarZone_Destroy_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	WZ* s = (WZ*)pElem;
 	WarZone_Delete(s);
 	return;
 }
 PElem WarZone_Clone_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	WZ* s = (WZ*)pElem;
 	s = WarZone_Duplicate(s);
 	return s;
 }
 void WarZone_Print_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	WZ* s = (WZ*)pElem;
 	WarZone_Print(s);
 	return;
 }
 PKey WarZone_Get_Key_Function(PElem pElem)
 {
-
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	WZ* s = (WZ*)pElem;
 	return WarZone_Get_ID(s);
 }
@@ -231,26 +269,52 @@ char* Command_Get_Arg(PCommand c, int i)
 	return c->Command_Arguments[i];
 }
 
+void Print_Battelfield(PBf bf)
+{
+	if (bf == NULL) {
+		printf("Error: No Battelfield\n");
+		return;
+	}
+	printf("Battelfield\n");
+	List_Print(bf->warzones);
+}
+
 bool Command_Compare_Func(PKey ID1, PKey ID2)
 {
+	if (ID1 == NULL || ID2 == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
 	if (!strcmp((char*)ID1, (char*)ID2))
 		return true;
 	return false;
 }
 void Command_Destroy_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	PCommand a = (PCommand)pElem;
 	Command_Delete(a);
 	return;
 }
 PElem Command_Clone_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	PCommand a = (PCommand)pElem;
 	a = Command_Duplicate(a);
 	return a;
 }
 PKey Command_Get_Key_Function(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	PCommand a = (PCommand)pElem;
 	return Command_Get_Index(a);
 }

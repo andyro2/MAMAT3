@@ -13,8 +13,7 @@ PBf Battlefield_Create(CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, 
 void Battlefield_Delete(PBf);
 void Battlefield_Add_WarZone(PBf, char*);
 void Battlefield_Del_WarZone(PBf, char*);
-bool Battlefield_Emergency_WarZone(PBf, char*);
-PWZ Battlefield_Get_WarZone(PBf, char*);
+//bool Battlefield_Emergency_WarZone(PBf, char*);
 
 void Add_Command(PBf, char*, int);
 void Delete_Command(PBf, PCommand);
@@ -22,13 +21,14 @@ PList Command_Sort(PBf);
 PList Get_Command(PBf);
 void Set_Command(PBf, PList);
 int Get_Command_Num(PBf);
+void Print_Battelfield(PBf bf);
 
 /* Warzone Functions*/
-bool Warzone_Compare_Func(PKey, PKey);
-void Warzone_Destroy_Func(PElem);
-PElem Warzone_Clone_Func(PElem);
-void Warzone_Print_Func(PElem);
-PKey Warzone_Get_Key_Function(PElem);
+bool WarZone_Compare_Func(PKey, PKey);
+void WarZone_Destroy_Func(PElem);
+PElem WarZone_Clone_Func(PElem);
+void WarZone_Print_Func(PElem);
+PKey WarZone_Get_Key_Function(PElem);
 
 /* Command Functions*/
 PCommand Command_Create(char*,int);

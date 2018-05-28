@@ -185,6 +185,15 @@ void List_Duplicate(PList l_exist, PList l_new)
 	return;
 }
 
+PKey List_Get_Key(PList l)
+{
+	if ((l == NULL) || (l->pNode == NULL)) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
+	return l->pNode->key;
+}
+
 PElem List_Get_Elem(PList l, PKey key)
 {
 	Node* currNode, *prevNode;

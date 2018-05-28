@@ -135,10 +135,15 @@ Result Squad_Insert_Sold_APC(PSquad squad, char* sol_ID, char* apc_ID)
 		return FAILURE;
 	}
 	APC* a = (APC*)List_Get_Elem(squad->APCs, apc_ID);
-	soldier* s = (soldier*)List_Get_Elem(squad->Soldiers, sol_ID);
-	if (s == NULL || a == NULL)
+	if (a == NULL) {
+		printf("Error: No Such APC\n");
 		return FAILURE;
-
+	}
+	soldier* s = (soldier*)List_Get_Elem(squad->Soldiers, sol_ID);
+	if (s == NULL) {
+		printf("Error: No Such Soldier\n");
+		return FAILURE;
+	}
 	return APC_Insert_Soldier(a, s);
 }
 
@@ -150,15 +155,21 @@ Result Squad_APC_Pop(PSquad squad, char* apc_ID)
 		return FAILURE;
 	}
 	APC* a = (APC*)List_Get_Elem(squad->APCs, apc_ID);
-	soldier* s = APC_Pop(a);
-	if (s == NULL || a == NULL)
+	if (a == NULL) {
+		printf("Error: No Such APC\n");
 		return FAILURE;
+	}
+	soldier* s = APC_Pop(a);
+	if (s == NULL) {
+		printf("Error: No Such Soldier\n");
+		return FAILURE;
+	}
 	return List_Add_Elem(squad->Soldiers, s);
-	
 }
 
 Result Squad_Delete_Soldier(PSquad squad, char* sol_ID)
 {
+
 	if (squad == NULL || sol_ID == NULL)
 	{
 		printf(ARG_ERR_MSG);
@@ -170,6 +181,7 @@ Result Squad_Delete_Soldier(PSquad squad, char* sol_ID)
 		squad->Count--;
 		return r;
 	}
+	printf("Error: No Such Soldier\n");
 	return r;
 }
 
@@ -191,25 +203,11 @@ Result Squad_Delete_APC(PSquad squad, char* apc_ID)
 		squad->Count = squad->Count - solds_in_apc; //"Kills" all soldiers in APC
 		return r;
 	}
+	printf("Error: No Such APC\n");
 	return r;
 }
 
-soldier* Get_Soldier(PList squad, char* sol_ID)
-{
-	if (sol_ID == NULL)
-		return NULL;
-	
-}
 
-/*User fuctions*/
-
-void Squad_Print_Func(PElem Data) {
-	if (Data == NULL) {
-		printf(ARG_ERR_MSG);
-		return;
-	}
-	Squad_Print((PSquad)Data);
-}
 
 char* Squad_Get_ID(PSquad sq)
 {
@@ -220,31 +218,50 @@ char* Squad_Get_ID(PSquad sq)
 
 bool Soldier_Compare_Func(PKey ID1, PKey ID2)
 {
+	if (ID1 == NULL || ID2 == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
 	if (!strcmp((char*)ID1, (char*)ID2))
 		return true;
 	return false;
 }
 void Soldier_Destroy_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	soldier* s = (soldier*)pElem;
 	Soldier_Delete(s);
 	return;
 }
 PElem Soldier_Clone_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	soldier* s = (soldier*)pElem;
 	s = Soldier_Duplicate(s);
 	return s;
 }
 void Soldier_Print_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	soldier* s = (soldier*)pElem;
 	Soldier_Print(s);
 	return;
 }
 PKey Soldier_Get_Key_Function(PElem pElem)
 {
-
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	soldier* s = (soldier*)pElem;
 	return Soldier_Get_ID(s);
 }
@@ -253,30 +270,50 @@ PKey Soldier_Get_Key_Function(PElem pElem)
 
 bool APC_Compare_Func(PKey ID1, PKey ID2)
 {
+	if (ID1 == NULL || ID2 == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
 	if (!strcmp((char*)ID1, (char*)ID2))
 		return true;
 	return false;
 }
 void APC_Destroy_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	APC* a = (APC*)pElem;
 	APC_Delete(a);
 	return;
 }
 PElem APC_Clone_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	APC* a = (APC*)pElem;
 	a = APC_Duplicate(a);
 	return a;
 }
 void APC_Print_Func(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
 	APC* a = (APC*)pElem;
 	APC_Print(a);
 	return;
 }
 PKey APC_Get_Key_Function(PElem pElem)
 {
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
 	APC* a = (APC*)pElem;
 	return APC_Get_ID(a);
 }

@@ -26,8 +26,6 @@ char* Squad_Get_ID(PSquad);
 
 /*User Functions*/
 
-void Squad_Print_Func(PElem);
-
 /* Soldier Functions*/
 bool Soldier_Compare_Func(PKey, PKey);
 void Soldier_Destroy_Func(PElem);

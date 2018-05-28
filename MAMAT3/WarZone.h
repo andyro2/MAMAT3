@@ -18,6 +18,12 @@ bool WarZone_Valid_ID(char* ID);
 void WarZone_Add_Squad(PWZ wz, char* squad_ID);
 void WarZone_Remove_Squad(PWZ wz, char* squad_ID);
 void WarZone_Move_Squad(PWZ origin_w, PWZ dest_w, char* squad_ID);
+void WarZone_Add_Soldier(PWZ wz, char* sq_ID, char* sol_ID, char* pos);
+void WarZone_Remove_Soldier(PWZ wz, char* sq_ID, char* sol_ID);
+void WarZone_Add_APC(PWZ wz, char* sq_ID, char* apc_ID);
+void WarZone_Remove_APC(PWZ wz, char* sq_ID, char* apc_ID);
+void WarZone_Sold_Insert(PWZ wz, char* sq_ID, char* apc_ID, char* sol_ID);
+void WarZone_APC_Pop(PWZ wz, char* sq_ID, char* apc_ID);
 
 bool Squad_Compare_Func(PKey ID1, PKey ID2);
 void Squad_Destroy_Func(PElem pElem);
