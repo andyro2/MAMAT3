@@ -24,7 +24,7 @@ void WarZone_Add_APC(PWZ wz, char* sq_ID, char* apc_ID);
 void WarZone_Remove_APC(PWZ wz, char* sq_ID, char* apc_ID);
 void WarZone_Sold_Insert(PWZ wz, char* sq_ID, char* apc_ID, char* sol_ID);
 void WarZone_APC_Pop(PWZ wz, char* sq_ID, char* apc_ID);
-PList WarZone_Get_Squads(PWZ);
+PList WarZone_Get_Squad_List(PWZ wz);
 
 bool Squad_Compare_Func(PKey ID1, PKey ID2);
 void Squad_Destroy_Func(PElem pElem);
