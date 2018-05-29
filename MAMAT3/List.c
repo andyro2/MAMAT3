@@ -110,7 +110,10 @@ Result List_Add_Elem(PList l, PElem elem)
 	currNode->elem = new;
 	currNode->key = l->get_key_func(new);
 	currNode->pNext = NULL;
-	prevNode->pNext = currNode;
+	if (prevNode != NULL)
+		prevNode->pNext = currNode;
+	else
+		l->pNode = currNode;
 	l->num++;
 	return SUCCESS;
 }
