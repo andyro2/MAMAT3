@@ -329,6 +329,7 @@ void Command_Destroy_Func(PElem pElem)
 }
 PElem Command_Clone_Func(PElem pElem)
 {
+
 	if (pElem == NULL) {
 		printf(ARG_ERR_MSG);
 		return NULL;
