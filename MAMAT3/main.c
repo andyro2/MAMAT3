@@ -116,7 +116,7 @@ while (!ended) {												//program didnt end
 					fprintf(stderr, "Error: No Battlefield\n");
 				else
 				{
-					 if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+					if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
 						Battlefield_Add_WarZone(battlefield, currArgs1);
 					else if ((!strcmp(currArgs0, "Del_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
 						Battlefield_Del_WarZone(battlefield, currArgs1);
@@ -221,11 +221,11 @@ while (!ended) {												//program didnt end
 					{
 						Print_Battelfield(battlefield);
 					}	
-					Delete_Command(battlefield, currCommand);
-					currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
 				}
-				printf("**********All Commands Executed**********\n\n");
+				Delete_Command(battlefield, currCommand);
+				currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
 			}
+			printf("**********All Commands Executed**********\n\n");
 
 		}
 	else if (strlen(Curr_Command_Index) == 1) { //collect valid executions
