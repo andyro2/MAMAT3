@@ -75,7 +75,7 @@ void Battlefield_Delete(PBf bf) //bf !NULL
 	return;
 } 
 
-void Battelfield_Move_all_Squads(PWZ to_wz, PBf bf) 
+void Battelfield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
 {
 	PList tmp_wz = bf->warzones;
 	while (tmp_wz != NULL) {
