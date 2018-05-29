@@ -157,7 +157,6 @@ void Delete_Command(PBf bf, PCommand command)
 		bf->comm_num--;
 	return;
 }				
-//Unused so far
 
 PList Get_Command(PBf bf)
 {

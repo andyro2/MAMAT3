@@ -121,7 +121,7 @@ Result List_Add_Elem(PList l, PElem elem)
 Result List_Remove_Elem(PList l, PKey key)
 {
 	Node* currNode, *prevNode;
-	if ((l == NULL) || (key = NULL)) {
+	if ((l == NULL) || (key == NULL)) {
 		printf(ARG_ERR_MSG);
 		return FAILURE;
 	}

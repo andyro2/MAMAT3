@@ -71,19 +71,19 @@ while (!ended) {												//program didnt end
 	/**Cases according to command's index**/
 
 	if (!strcmp(Curr_Command_Index, "Exit")) {
-		if (!Battlefield_Created)
-			fprintf(stderr, "Error: No Battlefield\n");
-		else
+		if (Battlefield_Created)
+			//fprintf(stderr, "Error: No Battlefield\n");
+		//else
 			Battlefield_Delete(battlefield);
 		ended = true; //Not really necessary
-		return;
+		//return;
 	}
 	//C.1) index is "Exe" - need to execute all commands by current order
 	else if (!strcmp(Curr_Command_Index, "Exe")) {
 		
 			Set_Command(battlefield, Command_Sort(battlefield));
 			PCommand currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
-			//int commands_num = Get_Command_Num(battlefield);
+			int commands_num = Get_Command_Num(battlefield);
 			char* currArgs0, *currArgs1, *currArgs2, *currArgs3, *currArgs4;
 			if (currCommand == NULL)
 				printf("No Commands to Execute\n");	
@@ -222,8 +222,13 @@ while (!ended) {												//program didnt end
 						Print_Battelfield(battlefield);
 					}	
 				}
-				Delete_Command(battlefield, currCommand);
-				currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
+				if (currCommand != NULL)
+				{
+					commands_num--;
+					Delete_Command(battlefield, currCommand);
+					if (commands_num > 0)
+						currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
+				}
 			}
 			printf("**********All Commands Executed**********\n\n");
 
