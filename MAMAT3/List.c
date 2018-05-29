@@ -129,7 +129,10 @@ Result List_Remove_Elem(PList l, PKey key)
 	prevNode = l->pNode;
 	while (currNode) {
 		if (l->comp_keys_func(l->get_key_func(currNode->elem), key)) {
-			prevNode->pNext = currNode->pNext;
+			if (prevNode == currNode) //1st Node
+				l->pNode = currNode->pNext;
+			else
+				prevNode->pNext = currNode->pNext;
 			l->destroy_func(currNode->elem); //we assume also frees key
 			free(currNode);
 			l->num--;

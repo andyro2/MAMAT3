@@ -222,13 +222,15 @@ while (!ended) {												//program didnt end
 						Print_Battelfield(battlefield);
 					}	
 				}
-				if (currCommand != NULL)
-				{
+				//if (currCommand != NULL)
+				//{
 					commands_num--;
 					Delete_Command(battlefield, currCommand);
 					if (commands_num > 0)
 						currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
-				}
+					else
+						currCommand = NULL;
+				//}
 			}
 			printf("**********All Commands Executed**********\n\n");
 
@@ -268,7 +270,7 @@ while (!ended) {												//program didnt end
 			}
 			else
 				fprintf(stderr, "Error: Illegal Command\n");
-		}
+			}
 		}
 	else
 		fprintf(stderr, "Error: Illegal Command\n");
