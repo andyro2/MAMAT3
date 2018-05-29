@@ -169,7 +169,7 @@ void Set_Command(PBf bf, PList commands)
 	PList new_commands = List_Create(List_Get_Clone_Func(commands),List_Get_Des_Func(commands),
 						List_Get_Cmp_Func(commands),List_Get_Print_Func(commands),List_Get_Get_Key_Func(commands));
 	List_Delete(bf->commands);
-	List_Duplicate(new_commands, commands);
+	List_Duplicate(commands, new_commands);
 	bf->commands = new_commands;
 	return;
 }
