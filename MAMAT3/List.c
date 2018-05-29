@@ -167,12 +167,14 @@ PElem List_Get_Next(PList l, char* key)
 	{
 		if (l->comp_keys_func(l->get_key_func(n->elem), key)) {
 			n = n->pNext;
+			if (n == NULL)
+				return NULL;
 			return n->elem;
 		}
 		else
 			n = n->pNext;
 	}
-	printf(ARG_ERR_MSG); //There is no element corresponding to key
+	//printf(ARG_ERR_MSG); //There is no element corresponding to key
 	return NULL;
 }
 

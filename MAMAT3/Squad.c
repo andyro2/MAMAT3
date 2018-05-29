@@ -207,7 +207,13 @@ Result Squad_Delete_APC(PSquad squad, char* apc_ID)
 	return r;
 }
 
+PList Squad_Get_Soldier_List(PSquad squad) {
+	return squad->Soldiers;
+}
 
+PList Squad_Get_APC_List(PSquad squad) {
+	return squad->APCs;
+}
 
 char* Squad_Get_ID(PSquad sq)
 {

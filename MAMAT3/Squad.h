@@ -23,6 +23,8 @@ Result Squad_Delete_Soldier(PSquad squad, char* sol_ID);
 Result Squad_Delete_APC(PSquad, char*);
 bool Squad_Valid_ID(char*);
 char* Squad_Get_ID(PSquad);
+PList Squad_Get_Soldier_List(PSquad squad);
+PList Squad_Get_APC_List(PSquad squad);
 
 /*User Functions*/
 

@@ -83,11 +83,11 @@ void Battlefield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
 	PWZ curr_wz = (PWZ)List_Get_First(bf->warzones);
 	PSquad squad;
 	char* sq_ID;
-	while (curr_wz) {
+	while (curr_wz != NULL) {
 		if (curr_wz != to_wz)
 		{
 			squad = (PSquad)List_Get_First(WarZone_Get_Squad_List(curr_wz));
-			while (squad)
+			while (squad != NULL)
 			{
 				sq_ID = Squad_Get_ID(squad);
 				WarZone_Move_Squad(curr_wz, to_wz, sq_ID);
@@ -134,9 +134,79 @@ bool Battlefield_Emergency_WarZone(PBf bf, char* wz)
 PWZ Battlefield_Get_WarZone(PBf bf, char* wz)
 {
 	PWZ warzone = (PWZ)List_Get_Elem(bf->warzones, wz);
-	if (warzone == NULL)
-		fprintf(stderr, "Error: No Such War Zone\n");
 	return warzone;
+}
+
+bool Battlfield_Check_Squad(PBf bf, char* sq_ID)
+{
+	if(sq_ID == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
+	PWZ wz = List_Get_First(bf->warzones);
+	char* wz_ID;
+	while (wz != NULL)
+	{
+		wz_ID = WarZone_Get_ID(wz);
+		if (List_Get_Elem(WarZone_Get_Squad_List(wz), sq_ID) != NULL) {
+			return true;
+		}
+		wz = List_Get_Next(bf->warzones, wz_ID);
+		
+	}
+	return false;
+}
+
+bool Battlefield_Check_Soldier(PBf bf, char* sol_ID)
+{
+	if (sol_ID == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
+	PWZ wz = List_Get_First(bf->warzones);
+	PList sq_list = WarZone_Get_Squad_List(wz);
+	PSquad squad; 
+	char* wz_ID, *sq_ID;
+	while (wz != NULL)
+	{
+		wz_ID = WarZone_Get_ID(wz);
+		squad = List_Get_First(sq_list);
+		while (squad != NULL)
+		{
+			sq_ID = Squad_Get_ID(squad);
+			if (List_Get_Elem(Squad_Get_Soldier_List(squad), sol_ID) != NULL)
+				return true;
+			squad = List_Get_Next(sq_list, sq_ID);
+		}
+		wz = List_Get_Next(bf->warzones, wz_ID);
+	}
+	return false;
+}
+
+bool Battlefield_Check_APC(PBf bf, char* APC_ID)
+{
+	if (APC_ID == NULL) {
+		printf(ARG_ERR_MSG);
+		return false;
+	}
+	PWZ wz = List_Get_First(bf->warzones);
+	PList sq_list = WarZone_Get_Squad_List(wz);
+	PSquad squad;
+	char* wz_ID, *sq_ID;
+	while (wz != NULL)
+	{
+		wz_ID = WarZone_Get_ID(wz);
+		squad = List_Get_First(sq_list);
+		while (squad != NULL)
+		{
+			sq_ID = Squad_Get_ID(squad);
+			if (List_Get_Elem(Squad_Get_APC_List(squad), APC_ID) != NULL)
+				return true;
+			squad = List_Get_Next(sq_list, sq_ID);
+		}
+		wz = List_Get_Next(bf->warzones, wz_ID);
+	}
+	return false;
 }
 
 /**User Functions**/

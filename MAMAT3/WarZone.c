@@ -60,6 +60,7 @@ void WarZone_Print(PWZ WarZone) {
 	}
 	printf("WarZone: %s , Alert State: %d\n\n", WarZone->ID, WarZone->alertness);
 	List_Print(WarZone->squads);
+	printf("\n");
 }
 
 PWZ WarZone_Duplicate(PWZ war_zone) 
@@ -121,10 +122,7 @@ void WarZone_Remove_Squad(PWZ wz, char* squad_ID)
 		printf("Error: No Such Squad\n");
 		return;
 	}
-	if (List_Remove_Elem(wz->squads, squad_ID) == FAILURE) {
-		printf("Error: Squad Already Exists\n");
-		return;
-	}
+	List_Remove_Elem(wz->squads, squad_ID);
 	return;
 }
 
