@@ -27,7 +27,7 @@ Result List_Remove_Elem(PList, PKey); /*Removes Element corresponding to a key f
 
 PElem List_Get_First(PList); /*Returns 1st Element of the List*/
 
-PElem List_Get_Next(PList); /*Returns next Element of the List, NULL if end of List*/
+PElem List_Get_Next(PList, PKey); /*Returns next Element of the List, NULL if end of List*/
 
 void List_Duplicate(PList, PList); /*Duplicates all Elements from Origin List to Empty Destination List*/
 
