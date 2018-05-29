@@ -128,7 +128,7 @@ while (!ended) {												//program didnt end
 								break;
 							}
 							if (WarZone_Raise_Alert(warzone) == 3) {
-								Battelfield_Move_all_Squads(warzone, battlefield);
+								Battlefield_Move_all_Squads(warzone, battlefield);
 							}
 						}
 					else if ((!strcmp(currArgs0, "Add_Sq")) && (currArgs3 == NULL) && (currArgs2 != NULL))
@@ -219,7 +219,7 @@ while (!ended) {												//program didnt end
 					}
 					else if ((!strcmp(currArgs0, "Print")) && (currArgs1 == NULL))
 					{
-						Print_Battelfield(battlefield);
+						Print_Battlefield(battlefield);
 					}	
 				}
 				//if (currCommand != NULL)

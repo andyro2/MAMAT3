@@ -75,7 +75,7 @@ void Battlefield_Delete(PBf bf) //bf !NULL
 	return;
 } 
 
-void Battelfield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
+void Battlefield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
 {
 	//PList new_list = List_Create(List_Get_Clone_Func(bf->warzones), List_Get_Des_Func(bf->warzones),
 			//List_Get_Cmp_Func(bf->warzones), List_Get_Print_Func(bf->warzones), List_Get_Get_Key_Func(bf->warzones));
@@ -296,13 +296,13 @@ char* Command_Get_Arg(PCommand c, int i)
 	return c->Command_Arguments[i];
 }
 
-void Print_Battelfield(PBf bf)
+void Print_Battlefield(PBf bf)
 {
 	if (bf == NULL) {
-		printf("Error: No Battelfield\n");
+		printf("Error: No Battlefield\n");
 		return;
 	}
-	printf("Battelfield\n");
+	printf("Battlefield:\n");
 	List_Print(bf->warzones);
 }
 

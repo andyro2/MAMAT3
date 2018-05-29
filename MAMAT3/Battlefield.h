@@ -14,7 +14,7 @@ void Battlefield_Delete(PBf);
 void Battlefield_Add_WarZone(PBf, char*);
 void Battlefield_Del_WarZone(PBf, char*);
 //bool Battlefield_Emergency_WarZone(PBf, char*);
-void Battelfield_Move_all_Squads(PWZ, PBf);
+void Battlefield_Move_all_Squads(PWZ, PBf);
 PWZ Battlefield_Get_WarZone(PBf, char*);
 
 void Add_Command(PBf, char* arg[MAX_ARG], int);
@@ -23,7 +23,7 @@ PList Command_Sort(PBf);
 PList Get_Command(PBf);
 void Set_Command(PBf, PList);
 int Get_Command_Num(PBf);
-void Print_Battelfield(PBf bf);
+void Print_Battlefield(PBf bf);
 
 /* Warzone Functions*/
 bool WarZone_Compare_Func(PKey, PKey);
