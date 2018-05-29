@@ -252,8 +252,11 @@ PCommand Command_Create(char* args[MAX_ARG], int index)
 		{ 
 			//strcpy(&((*command->Command_Arguments)[i]), &((*args)[i])); //Array of args- check validity
 			//curr_arg = (command->Command_Arguments)[i];
-			command->Command_Arguments[i] = "Hello";
-			//strcpy(command->Command_Arguments[i], args[i]);
+			//command->Command_Arguments[i] = "Hello";
+			//command->Command_Arguments[i] = args[i];
+			strcpy(curr_arg, args[i]);
+			strcpy(command->Command_Arguments[i], curr_arg);
+
 		}
 	}
 	command->command_index = index;

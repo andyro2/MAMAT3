@@ -4,7 +4,7 @@ struct Node_
 {
 	PElem* elem;
 	PKey* key;
-	PNode pNext; 
+	PNode pNext;
 };
 
 struct List_
@@ -15,13 +15,13 @@ struct List_
 	COMPARE_KEYS_FUNC comp_keys_func;
 	PRINT_FUNC print_func;
 	GET_KEY_FUNC get_key_func;
-	int num; 
+	int num;
 };
 
 PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS_FUNC comp_keys_func, PRINT_FUNC print_func, GET_KEY_FUNC get_key_func)
 {
 	PList l;
-	if ((clone_func == NULL) || (destroy_func == NULL) || (comp_keys_func == NULL) || (print_func == NULL)|| get_key_func == NULL) {
+	if ((clone_func == NULL) || (destroy_func == NULL) || (comp_keys_func == NULL) || (print_func == NULL) || get_key_func == NULL) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
@@ -36,7 +36,7 @@ PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS
 	free(l);
 	return NULL;
 	}*/ //I don't think the Node should be allocated in List Create
-	l->pNode = NULL; 
+	l->pNode = NULL;
 	l->clone_func = clone_func;
 	l->destroy_func = destroy_func;
 	l->comp_keys_func = comp_keys_func;
@@ -58,7 +58,7 @@ void List_Delete(PList l)
 		currNode = currNode->pNext;
 		l->destroy_func(tempNode->elem); //we assume also frees key (maybe? :/ )
 		free(tempNode); //if node dosen't have alloc then free is a warning (therefore needs alloc or no free)
-		l->num--; 
+		l->num--;
 		tempNode = currNode;
 	}
 	//free(l->destroy_func); // free all the func? They didnt (lecture&exercise) so I guess we Shouldn't
