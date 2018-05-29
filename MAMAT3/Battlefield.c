@@ -20,15 +20,15 @@ struct Command_ {
 /**Funcs**/
 
 PBf Battlefield_Create(CLONE_FUNC clone_func_warzone, DESTROY_FUNC destroy_func_warzone, COMPARE_KEYS_FUNC comp_keys_func_warzone, PRINT_FUNC print_func_warzone, GET_KEY_FUNC get_key_func_warzone
-					 , CLONE_FUNC clone_func_command, DESTROY_FUNC destroy_func_command, COMPARE_KEYS_FUNC comp_keys_func_command, GET_KEY_FUNC get_key_func_command)
+					 , CLONE_FUNC clone_func_command, DESTROY_FUNC destroy_func_command, COMPARE_KEYS_FUNC comp_keys_func_command, PRINT_FUNC print_func_command, GET_KEY_FUNC get_key_func_command)
 {
 	PBf bf;
 	
-	if ((clone_func_warzone == NULL) || (destroy_func_warzone == NULL) || (comp_keys_func_warzone == NULL) || (print_func_warzone == NULL) || get_key_func_warzone == NULL) {
+	if ((clone_func_warzone == NULL) || (destroy_func_warzone == NULL) || (comp_keys_func_warzone == NULL) || (print_func_warzone == NULL) || ( get_key_func_warzone == NULL)) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	if ((clone_func_command == NULL) || (destroy_func_command == NULL) || (comp_keys_func_command == NULL) || get_key_func_command == NULL) {
+	if ((clone_func_command == NULL) || (destroy_func_command == NULL) || (comp_keys_func_command == NULL) || (print_func_command == NULL ) || ( get_key_func_command == NULL)) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
@@ -42,7 +42,7 @@ PBf Battlefield_Create(CLONE_FUNC clone_func_warzone, DESTROY_FUNC destroy_func_
 		return NULL;
 	}
 	bf->warzones = List_Create(clone_func_warzone, destroy_func_warzone, comp_keys_func_warzone, print_func_warzone, get_key_func_warzone);
-	bf->commands = List_Create(clone_func_command, destroy_func_command, comp_keys_func_command, NULL, get_key_func_command);
+	bf->commands = List_Create(clone_func_command, destroy_func_command, comp_keys_func_command, print_func_command, get_key_func_command);
 	bf->comm_num = 0;
 	return bf;
 }
@@ -56,7 +56,7 @@ PList Command_Sort(PBf bf) //bf !NULL
 	int i = 1;
 	while (i <= bf->comm_num)
 	{
-		curr_comm = List_Get_Elem(unor_list, i);
+		curr_comm = (PCommand)List_Get_Elem(unor_list, &i);
 		List_Add_Elem(ordered_list, curr_comm);
 		i++;
 	}
@@ -77,17 +77,26 @@ void Battlefield_Delete(PBf bf) //bf !NULL
 
 void Battelfield_Move_all_Squads(PWZ to_wz, PBf bf) 
 {
-	PList tmp_wz = bf->warzones;
-	while (tmp_wz != NULL) {
-		PSquad squad =(PSquad) List_Get_First(tmp_wz);
-		
-		//PWZ from_wz = (PWZ)List_Get_Elem()
-
-		while (squad != NULL) {
-			//WarZone_Move_Squad(List_Get_Elem(tmp_wz));
+	//PList new_list = List_Create(List_Get_Clone_Func(bf->warzones), List_Get_Des_Func(bf->warzones),
+			//List_Get_Cmp_Func(bf->warzones), List_Get_Print_Func(bf->warzones), List_Get_Get_Key_Func(bf->warzones));
+	PList wz_list = bf->warzones;
+	PWZ curr_wz = (PWZ)List_Get_First(wz_list);
+	PSquad squad;
+	char* ID;
+	while (curr_wz != NULL) {
+		if (curr_wz != to_wz)
+		{
+			squad = (PSquad)List_Get_First(WarZone_Get_Squads(curr_wz));
+			while (squad != NULL)
+			{
+				ID = Squad_Get_ID(squad);
+				WarZone_Move_Squad(curr_wz, to_wz, ID);
+				squad = (PSquad)List_Get_First(WarZone_Get_Squads(curr_wz));
+			}
 		}
-
+		curr_wz = (PWZ)List_Get_Next(wz_list, WarZone_Get_ID(curr_wz));
 	}
+	return;
 }
 
 void Battlefield_Add_WarZone(PBf bf, char* wz)
@@ -129,11 +138,14 @@ PWZ Battlefield_Get_WarZone(PBf bf, char* wz)
 		fprintf(stderr, "Error: No Such War Zone\n");
 	return warzone;
 }
+
 /**User Functions**/
 
 
-void Add_Command(PBf bf, char* args, int index)
-{
+void Add_Command(PBf bf, char* args[MAX_ARG], int index)
+{ 
+
+	//printf("arg[0]: %s, arg[1]: %s", args[0], args[1]);
 	if (List_Add_Elem(bf->commands, Command_Create(args, index)) == SUCCESS);
 		bf->comm_num++;
 	return;
@@ -141,7 +153,7 @@ void Add_Command(PBf bf, char* args, int index)
 
 void Delete_Command(PBf bf, PCommand command)
 {
-	if (List_Remove_Elem(bf->commands, command->command_index) == SUCCESS);
+	if (List_Remove_Elem(bf->commands, &(command->command_index)) == SUCCESS);
 		bf->comm_num--;
 	return;
 }				
@@ -164,7 +176,7 @@ void Set_Command(PBf bf, PList commands)
 
 int Get_Command_Num(PBf bf)
 {
-	return bf->commands;
+	return bf->comm_num;
 }
 
 /* WarZone Functions*/
@@ -222,15 +234,28 @@ PKey WarZone_Get_Key_Function(PElem pElem)
 
 /* Command Functions*/
 
-PCommand Command_Create(char* args, int index)
+PCommand Command_Create(char* args[MAX_ARG], int index)
 {
+	//printf("arg[0]: %s, arg[1]: %s", args[0], args[1]);
 	PCommand command = (PCommand)malloc(sizeof(Command));
+	char* curr_arg;
 	if (command == NULL) {
 		free(command);
 		printf(MALLOC_ERR_MSG);
 		return NULL;
 	}
-	strcpy(command->Command_Arguments, args); //Array of args- check validity
+	for (int i = 0; i < MAX_ARG; i++)
+	{
+		if (args[i] == NULL)
+			command->Command_Arguments[i] = NULL;
+		else
+		{ 
+			//strcpy(&((*command->Command_Arguments)[i]), &((*args)[i])); //Array of args- check validity
+			//curr_arg = (command->Command_Arguments)[i];
+			command->Command_Arguments[i] = "Hello";
+			//strcpy(command->Command_Arguments[i], args[i]);
+		}
+	}
 	command->command_index = index;
 	return command;
 }
@@ -252,16 +277,16 @@ PCommand Command_Duplicate(PCommand exist_command)
 		return NULL;
 	}
 
-	PCommand new_command = Soldier_Create(exist_command->Command_Arguments, exist_command->command_index);
+	PCommand new_command = Command_Create(exist_command->Command_Arguments, exist_command->command_index);
 	if (new_command == NULL) {
 		return NULL;
 	}
 	return new_command;
 }
 
-char* Command_Get_Index(PCommand c)
+int* Command_Get_Index(PCommand c)
 {
-	return c->command_index;
+	return &(c->command_index);
 }
 
 char* Command_Get_Arg(PCommand c, int i)
@@ -308,6 +333,14 @@ PElem Command_Clone_Func(PElem pElem)
 	PCommand a = (PCommand)pElem;
 	a = Command_Duplicate(a);
 	return a;
+}
+void Command_Print_Func(PElem pElem)
+{
+	if (pElem == NULL) {
+		printf(ARG_ERR_MSG);
+		return;
+	}
+	return;
 }
 PKey Command_Get_Key_Function(PElem pElem)
 {

@@ -204,6 +204,11 @@ void WarZone_APC_Pop(PWZ wz, char* sq_ID, char* apc_ID)
 	return;
 }
 
+PList WarZone_Get_Squads(PWZ wz)
+{
+	return wz->squads;
+}
+
 
 
 

@@ -94,7 +94,7 @@ Result List_Add_Elem(PList l, PElem elem)
 	printf(MALLOC_ERR_MSG);
 	return FAILURE;
 	}*/
-	new = l->clone_func(elem); 
+	new = l->clone_func(elem); //elem isn't NULL yet becomes NULL here ><
 	currNode = l->pNode;
 	prevNode = l->pNode;
 	while (currNode) {
@@ -149,19 +149,28 @@ PElem List_Get_First(PList l)
 	return l->pNode->elem;
 }
 
-PElem List_Get_Next(PList l)
+PElem List_Get_Next(PList l, char* key)
 {
 	PNode n;
-	if ((l == NULL) || (l->pNode == NULL)) {
+	if ((l == NULL) || (l->pNode == NULL) || (key == NULL)) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
 	n = l->pNode;
-	if (n->pNext == NULL)
-		return NULL;
-	n = n->pNext;
-	return n->elem;
+	while (n != NULL)
+	{
+		if (l->comp_keys_func(l->get_key_func(n->elem), key)) {
+			n = n->pNext;
+			return n->elem;
+		}
+		else
+			n = n->pNext;
+	}
+	printf(ARG_ERR_MSG); //There is no element corresponding to key
+	return NULL;
 }
+
+
 
 void List_Duplicate(PList l_exist, PList l_new)
 {
@@ -184,6 +193,7 @@ void List_Duplicate(PList l_exist, PList l_new)
 	}
 	return;
 }
+
 
 PKey List_Get_Key(PList l)
 {
@@ -211,6 +221,7 @@ PElem List_Get_Elem(PList l, PKey key)
 	}
 	return NULL;
 }
+
 
 CLONE_FUNC List_Get_Clone_Func(PList list)
 {
