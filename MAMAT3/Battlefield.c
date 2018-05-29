@@ -267,6 +267,8 @@ void Command_Delete(PCommand command)
 		printf(ARG_ERR_MSG);
 		return;
 	}
+	for (int i = 0; (i < MAX_ARG) && (command->Command_Arguments[i] != NULL); i++)
+		free(command->Command_Arguments[i]);
 	free(command);
 	return;
 }

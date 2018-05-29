@@ -36,9 +36,17 @@ void main()
 	char* Curr_Command_Index;								//	will hold the current command index
 	char* Command_Arguments[MAX_ARG];						//	all command's arguments after strtok completed.
 	int command_index;
-	PBf battlefield = NULL;
+	//PBf battlefield = NULL;
 	bool ended = false;
 	bool Battlefield_Created = false;
+
+	PBf battlefield = Battlefield_Create(WarZone_Clone_Func, WarZone_Destroy_Func, WarZone_Compare_Func, WarZone_Print_Func, WarZone_Get_Key_Function,
+		Command_Clone_Func, Command_Destroy_Func, Command_Compare_Func, Command_Print_Func, Command_Get_Key_Function);
+	if (battlefield == NULL)
+	{
+		fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
+		Battlefield_Created = false;
+	}
 
 	//char szLine[MAX_LINE_SIZE];		//char* delimiters = " []\t\n";
 
@@ -72,10 +80,7 @@ while (!ended) {												//program didnt end
 	}
 	//C.1) index is "Exe" - need to execute all commands by current order
 	else if (!strcmp(Curr_Command_Index, "Exe")) {
-		if (!Battlefield_Created)
-			fprintf(stderr, "Error: No Battlefield\n");
-		else
-		{
+		
 			Set_Command(battlefield, Command_Sort(battlefield));
 			PCommand currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
 			//int commands_num = Get_Command_Num(battlefield);
@@ -99,118 +104,128 @@ while (!ended) {												//program didnt end
 						Battlefield_Created = false;
 					}
 					else */
+					if (Battlefield_Created)
+						fprintf(stderr, "Error: Battlefield Already Created!\n"); //Kistuah!!!
+					else
+					{
+						Battlefield_Created = true;
 						printf("Battlefield Created!\n");
+					}
 				}
-				else if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
-					Battlefield_Add_WarZone(battlefield, currArgs1);
-				else if ((!strcmp(currArgs0, "Del_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
-					Battlefield_Del_WarZone(battlefield, currArgs1);
-				else if ((!strcmp(currArgs0, "R_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+				else if (!Battlefield_Created)
+					fprintf(stderr, "Error: No Battlefield\n");
+				else
+				{
+					 if ((!strcmp(currArgs0, "Add_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+						Battlefield_Add_WarZone(battlefield, currArgs1);
+					else if ((!strcmp(currArgs0, "Del_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+						Battlefield_Del_WarZone(battlefield, currArgs1);
+					else if ((!strcmp(currArgs0, "R_W")) && (currArgs2 == NULL) && (currArgs1 != NULL))
+						{
+							PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+							if (warzone == NULL) {
+								fprintf(stderr, "Error: No Such War Zone\n");
+								break;
+							}
+							if (WarZone_Raise_Alert(warzone) == 3) {
+								Battelfield_Move_all_Squads(warzone, battlefield);
+							}
+						}
+					else if ((!strcmp(currArgs0, "Add_Sq")) && (currArgs3 == NULL) && (currArgs2 != NULL))
+						{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_Add_Squad(warzone, currArgs2);
+						}
+					else if ((!strcmp(currArgs0, "Del_Sq")) && (currArgs3 == NULL) && (currArgs2 != NULL))
 					{
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL) {
 							fprintf(stderr, "Error: No Such War Zone\n");
 							break;
 						}
-						if (WarZone_Raise_Alert(warzone) == 3) {
-							Battelfield_Move_all_Squads(warzone, battlefield);
-						}
+						WarZone_Remove_Squad(warzone, currArgs2);
 					}
-				else if ((!strcmp(currArgs0, "Add_Sq")) && (currArgs3 == NULL) && (currArgs2 != NULL))
+					else if ((!strcmp(currArgs0, "M_Sq")) && (currArgs4 == NULL) && (currArgs3 != NULL))
 					{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
+						PWZ origin_w = Battlefield_Get_WarZone(battlefield, currArgs1);
+						PWZ dest_w = Battlefield_Get_WarZone(battlefield, currArgs2);
+						if (origin_w == NULL) {
+							fprintf(stderr, "Error: No Such Origin War Zone\n");
+							break;
+						}
+						if (dest_w == NULL) {
+							fprintf(stderr, "Error: No Such Dest War Zone\n");
+							break;
+						}
+						WarZone_Move_Squad(origin_w, dest_w, currArgs3);
 					}
-					WarZone_Add_Squad(warzone, currArgs2);
+					else if ((!strcmp(currArgs0, "Add_Sold")) && (currArgs4 != NULL))
+					{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_Add_Soldier(warzone, currArgs2, currArgs3, currArgs4);
 					}
-				else if ((!strcmp(currArgs0, "Del_Sq")) && (currArgs3 == NULL) && (currArgs2 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
+					else if ((!strcmp(currArgs0, "Del_Sold")) && (currArgs4 == NULL) && (currArgs3 != NULL))
+					{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_Remove_Soldier(warzone, currArgs2, currArgs3);
 					}
-					WarZone_Remove_Squad(warzone, currArgs2);
+					else if ((!strcmp(currArgs0, "Add_APC")) && (currArgs4 == NULL) && (currArgs3 != NULL))
+					{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_Add_APC(warzone, currArgs2, currArgs3);
+					}
+					else if ((!strcmp(currArgs0, "Del_APC")) && (currArgs4 == NULL) && (currArgs3 != NULL))
+					{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_Remove_APC(warzone, currArgs2, currArgs3);
+					}
+					else if ((!strcmp(currArgs0, "Sold_Insert")) && (currArgs4 != NULL))
+					{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_Sold_Insert(warzone, currArgs2, currArgs3, currArgs4);
+					}
+					else if ((!strcmp(currArgs0, "APC_Pop")) && (currArgs4 == NULL) && (currArgs3 != NULL))
+					{
+						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
+						if (warzone == NULL) {
+							fprintf(stderr, "Error: No Such War Zone\n");
+							break;
+						}
+						WarZone_APC_Pop(warzone, currArgs2, currArgs3);
+					}
+					else if ((!strcmp(currArgs0, "Print")) && (currArgs1 == NULL))
+					{
+						Print_Battelfield(battlefield);
+					}	
+					Delete_Command(battlefield, currCommand);
+					currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
 				}
-				else if ((!strcmp(currArgs0, "M_Sq")) && (currArgs4 == NULL) && (currArgs3 != NULL))
-				{
-					PWZ origin_w = Battlefield_Get_WarZone(battlefield, currArgs1);
-					PWZ dest_w = Battlefield_Get_WarZone(battlefield, currArgs2);
-					if (origin_w == NULL) {
-						fprintf(stderr, "Error: No Such Origin War Zone\n");
-						break;
-					}
-					if (dest_w == NULL) {
-						fprintf(stderr, "Error: No Such Dest War Zone\n");
-						break;
-					}
-					WarZone_Move_Squad(origin_w, dest_w, currArgs3);
-				}
-				else if ((!strcmp(currArgs0, "Add_Sold")) && (currArgs4 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
-					}
-					WarZone_Add_Soldier(warzone, currArgs2, currArgs3, currArgs4);
-				}
-				else if ((!strcmp(currArgs0, "Del_Sold")) && (currArgs4 == NULL) && (currArgs3 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
-					}
-					WarZone_Remove_Soldier(warzone, currArgs2, currArgs3);
-				}
-				else if ((!strcmp(currArgs0, "Add_APC")) && (currArgs4 == NULL) && (currArgs3 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
-					}
-					WarZone_Add_APC(warzone, currArgs2, currArgs3);
-				}
-				else if ((!strcmp(currArgs0, "Del_APC")) && (currArgs4 == NULL) && (currArgs3 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
-					}
-					WarZone_Remove_APC(warzone, currArgs2, currArgs3);
-				}
-				else if ((!strcmp(currArgs0, "Sold_Insert")) && (currArgs4 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
-					}
-					WarZone_Sold_Insert(warzone, currArgs2, currArgs3, currArgs4);
-				}
-				else if ((!strcmp(currArgs0, "APC_Pop")) && (currArgs4 == NULL) && (currArgs3 != NULL))
-				{
-					PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
-					if (warzone == NULL) {
-						fprintf(stderr, "Error: No Such War Zone\n");
-						break;
-					}
-					WarZone_APC_Pop(warzone, currArgs2, currArgs3);
-				}
-				else if ((!strcmp(currArgs0, "Print")) && (currArgs1 == NULL))
-				{
-					Print_Battelfield(battlefield);
-				}	
-				Delete_Command(battlefield, currCommand);
-				currCommand = (PCommand)List_Get_First(Get_Command(battlefield));
+				printf("**********All Commands Executed**********\n\n");
 			}
-			printf("**********All Commands Executed**********\n\n");
-		}
 
 		}
 	else if (strlen(Curr_Command_Index) == 1) { //collect valid executions
@@ -242,15 +257,8 @@ while (!ended) {												//program didnt end
 			}
 			else if ((!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL))
 			{
-				Battlefield_Created = true; //Needs to be created in order to store Command List
-				battlefield = Battlefield_Create(WarZone_Clone_Func, WarZone_Destroy_Func, WarZone_Compare_Func, WarZone_Print_Func, WarZone_Get_Key_Function,
-					Command_Clone_Func, Command_Destroy_Func, Command_Compare_Func, Command_Print_Func, Command_Get_Key_Function);
-				if (battlefield == NULL)
-				{
-					fprintf(stderr, "Houston, we have a problem\n"); //self-check (after creating)
-					Battlefield_Created = false;
-				}
-				else
+				 //Needs to be created in order to store Command List
+				
 					Add_Command(battlefield, Command_Arguments, command_index);
 			}
 			else
@@ -260,4 +268,5 @@ while (!ended) {												//program didnt end
 	else
 		fprintf(stderr, "Error: Illegal Command\n");
 	}
+	return; //ended = true
 };
