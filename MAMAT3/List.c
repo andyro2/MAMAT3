@@ -84,7 +84,7 @@ Result List_Add_Elem(PList l, PElem elem)
 {
 	PElem new;
 	Node* currNode, *prevNode;
-	if ((l == NULL) || (elem = NULL)) {
+	if ((l == NULL) || (elem == NULL)) {
 		printf(ARG_ERR_MSG);
 		return FAILURE;
 	}
