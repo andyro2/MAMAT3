@@ -79,22 +79,22 @@ void Battelfield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
 {
 	//PList new_list = List_Create(List_Get_Clone_Func(bf->warzones), List_Get_Des_Func(bf->warzones),
 			//List_Get_Cmp_Func(bf->warzones), List_Get_Print_Func(bf->warzones), List_Get_Get_Key_Func(bf->warzones));
-	PList wz_list = bf->warzones;
-	PWZ curr_wz = (PWZ)List_Get_First(wz_list);
+	//PList wz_list = bf->warzones;
+	PWZ curr_wz = (PWZ)List_Get_First(bf->warzones);
 	PSquad squad;
-	char* ID;
-	while (curr_wz != NULL) {
+	char* sq_ID;
+	while (curr_wz) {
 		if (curr_wz != to_wz)
 		{
-			squad = (PSquad)List_Get_First(WarZone_Get_Squads(curr_wz));
-			while (squad != NULL)
+			squad = (PSquad)List_Get_First(WarZone_Get_Squad_List(curr_wz));
+			while (squad)
 			{
-				ID = Squad_Get_ID(squad);
-				WarZone_Move_Squad(curr_wz, to_wz, ID);
-				squad = (PSquad)List_Get_First(WarZone_Get_Squads(curr_wz));
+				sq_ID = Squad_Get_ID(squad);
+				WarZone_Move_Squad(curr_wz, to_wz, sq_ID);
+				squad = (PSquad)List_Get_Next(WarZone_Get_Squad_List(curr_wz),Squad_Get_ID(squad));
 			}
 		}
-		curr_wz = (PWZ)List_Get_Next(wz_list, WarZone_Get_ID(curr_wz));
+		curr_wz = (PWZ)List_Get_Next(bf->warzones, WarZone_Get_ID(curr_wz));
 	}
 	return;
 }
@@ -238,7 +238,7 @@ PCommand Command_Create(char* args[MAX_ARG], int index)
 {
 	//printf("arg[0]: %s, arg[1]: %s", args[0], args[1]);
 	PCommand command = (PCommand)malloc(sizeof(Command));
-	char* curr_arg;
+	//char* curr_arg;
 	if (command == NULL) {
 		free(command);
 		printf(MALLOC_ERR_MSG);
@@ -252,8 +252,9 @@ PCommand Command_Create(char* args[MAX_ARG], int index)
 		{ 
 			//strcpy(&((*command->Command_Arguments)[i]), &((*args)[i])); //Array of args- check validity
 			//curr_arg = (command->Command_Arguments)[i];
-			command->Command_Arguments[i] = "Hello";
-			//strcpy(command->Command_Arguments[i], args[i]);
+			//command->Command_Arguments[i] = "Hello";
+			command->Command_Arguments[i] = malloc(strlen(args[i]) + 1);
+			strcpy(command->Command_Arguments[i], args[i]);
 		}
 	}
 	command->command_index = index;
