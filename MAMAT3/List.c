@@ -210,7 +210,7 @@ PKey List_Get_Key(PList l)
 PElem List_Get_Elem(PList l, PKey key)
 {
 	Node* currNode, *prevNode;
-	if ((l == NULL) || (key = NULL)) {
+	if ((l == NULL) || (key == NULL)) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}

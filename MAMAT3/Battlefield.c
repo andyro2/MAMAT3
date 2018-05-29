@@ -307,13 +307,13 @@ void Print_Battelfield(PBf bf)
 	List_Print(bf->warzones);
 }
 
-bool Command_Compare_Func(PKey ID1, PKey ID2)
+bool Command_Compare_Func(PKey key1, PKey key2)
 {
-	if (ID1 == NULL || ID2 == NULL) {
+	if (key1 == NULL || key2 == NULL) {
 		printf(ARG_ERR_MSG);
 		return false;
 	}
-	if (!strcmp((char*)ID1, (char*)ID2))
+	if (*((int*)key1) == *((int*)key2))
 		return true;
 	return false;
 }
