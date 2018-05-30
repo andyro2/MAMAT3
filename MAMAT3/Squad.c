@@ -86,7 +86,9 @@ PSquad Squad_Duplicate(PSquad Squad) {
 	}
 	PList Soldiers = Squad->Soldiers;
 	PList APCs = Squad->APCs;
-	PSquad New_Squad = Squad_Create(Squad->ID,
+	char same_ID[MAX_ID_LENGTH];
+	strcpy(same_ID, Squad->ID);
+	PSquad New_Squad = Squad_Create(same_ID,
 		List_Get_Clone_Func(Soldiers), List_Get_Des_Func(Soldiers), List_Get_Cmp_Func(Soldiers), List_Get_Print_Func(Soldiers),
 		List_Get_Get_Key_Func(Soldiers), List_Get_Clone_Func(APCs), List_Get_Des_Func(APCs), List_Get_Cmp_Func(APCs),
 		List_Get_Print_Func(APCs), List_Get_Get_Key_Func(APCs));

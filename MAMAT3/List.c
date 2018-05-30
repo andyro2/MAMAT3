@@ -147,10 +147,12 @@ Result List_Remove_Elem(PList l, PKey key)
 PElem List_Get_First(PList l)
 {
 	//PNode n;
-	if ((l == NULL) || (l->pNode == NULL)) {
+	if (l == NULL) {
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
+	if (l->pNode == NULL)
+		return NULL;
 	//n = l->pNode; //unnecessary
 	return l->pNode->elem;
 }

@@ -20,6 +20,8 @@ soldier* APC_Pop(APC*); /*removes last soldier from APC*/
 
 bool APC_Valid_ID(char* ID);
 
+soldier* APC_Get_Sold(APC* apc, char* sol_ID);
+
 char* APC_Get_ID(APC* a);
 
 int Get_Num_Soldiers(APC* a);

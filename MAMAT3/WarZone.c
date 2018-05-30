@@ -69,7 +69,10 @@ PWZ WarZone_Duplicate(PWZ war_zone)
 		return NULL;
 	}
 	PList squad = war_zone->squads;
-	PWZ new_war_zone = WarZone_Create(war_zone->ID,
+
+	char same_ID[MAX_ID_LENGTH];
+	strcpy(same_ID, war_zone->ID);
+	PWZ new_war_zone = WarZone_Create(same_ID,
 		List_Get_Clone_Func(squad), List_Get_Des_Func(squad), List_Get_Cmp_Func(squad), List_Get_Print_Func(squad),
 		List_Get_Get_Key_Func(squad));
 
@@ -134,8 +137,9 @@ void WarZone_Move_Squad(PWZ origin_w, PWZ dest_w, char* squad_ID)
 	}
 	if (origin_w->ID == dest_w->ID)
 		return;
+
+	List_Add_Elem(dest_w->squads, squad);
 	List_Remove_Elem(origin_w->squads, squad_ID);
-	List_Add_Elem(dest_w->squads, squad_ID);
 	return;
 }
 

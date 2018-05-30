@@ -61,7 +61,9 @@ APC* APC_Duplicate(APC* apc)
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	new_apc = APC_Create(apc->ID);
+	char same_ID[MAX_ID_LENGTH];
+	strcpy(same_ID, apc->ID);
+	new_apc = APC_Create(same_ID);
 	for (int i = 0; i < apc->soldiers_num; i++) {
 		new_apc->soldiers[i] = Soldier_Duplicate(apc->soldiers[i]);
 		new_apc->soldiers_num++;
@@ -84,7 +86,7 @@ Result APC_Insert_Soldier(APC* apc, soldier* sold)
 		return SUCCESS;
 	}
 	
-	fprintf(stderr, "Error: APC is Full\n");
+	printf("Error: APC is Full\n");
 	return FAILURE;
 }
 
@@ -102,7 +104,21 @@ soldier* APC_Pop(APC* apc)
 		return sold;
 	}
 
-	fprintf(stderr, "Error: APC is Empty\n");
+	printf("Error: APC is Empty\n");
+	return NULL;
+}
+
+soldier* APC_Get_Sold(APC* apc, char* sol_ID)
+{
+	if (apc == NULL || sol_ID == NULL) {
+		printf(ARG_ERR_MSG);
+		return NULL;
+	}
+
+	for (int i = 0; i < apc->soldiers_num; i++) {
+		if (!strcmp(Soldier_Get_ID(apc->soldiers[i]), sol_ID))
+			return apc->soldiers[i];
+	}
 	return NULL;
 }
 
