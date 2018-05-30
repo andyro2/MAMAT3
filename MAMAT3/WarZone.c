@@ -60,7 +60,6 @@ void WarZone_Print(PWZ WarZone) {
 	}
 	printf("WarZone: %s , Alert State: %d\n\n", WarZone->ID, WarZone->alertness);
 	List_Print(WarZone->squads);
-	printf("\n");
 }
 
 PWZ WarZone_Duplicate(PWZ war_zone) 
@@ -174,7 +173,7 @@ void WarZone_Add_APC(PWZ wz, char* sq_ID, char* apc_ID)
 void WarZone_Remove_APC(PWZ wz, char* sq_ID, char* apc_ID) {
 	PSquad squad = (PSquad)List_Get_Elem(wz->squads, sq_ID);
 	if (squad == NULL) {
-		printf("Error: No Such APC\n");
+		printf("Error: No Such Squad\n");
 		return;
 	}
 	Squad_Delete_APC(squad, apc_ID); // prints error in function

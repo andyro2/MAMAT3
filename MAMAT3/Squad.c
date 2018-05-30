@@ -76,6 +76,7 @@ void Squad_Print(PSquad squad)
 	List_Print(squad->APCs);
 	printf("Soldiers:\n");
 	List_Print(squad->Soldiers);
+	printf("\n");
 }
 
 PSquad Squad_Duplicate(PSquad Squad) {
@@ -144,7 +145,10 @@ Result Squad_Insert_Sold_APC(PSquad squad, char* sol_ID, char* apc_ID)
 		printf("Error: No Such Soldier\n");
 		return FAILURE;
 	}
-	return APC_Insert_Soldier(a, s);
+	Result r =APC_Insert_Soldier(a,Soldier_Duplicate(s));
+	Squad_Delete_Soldier(squad, sol_ID); // reduces one count when deleted
+	squad->Count++;
+	return r;
 }
 
 Result Squad_APC_Pop(PSquad squad, char* apc_ID)

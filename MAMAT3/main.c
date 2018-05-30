@@ -5,14 +5,14 @@
 #include "APC.h"
 #include "List.h"
 #include "Squad.h"
-#include "Warzone.h"
+#include "WarZone.h"
 #include "Battlefield.h"
 
 #define MAX_LINE_SIZE 256
 //#pragma warning(disable:4996)
 
 
-void main()
+int main()
 {
 	/* Command List Construction */
 	/*
@@ -137,7 +137,7 @@ while (!ended) {												//program didnt end
 						if (warzone == NULL) 
 							fprintf(stderr, "Error: No Such War Zone\n");
 							
-						else if(!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if(!Battlefield_Check_Squad(battlefield, currArgs2))
 							WarZone_Add_Squad(warzone, currArgs2);
 						else 
 							printf("Error: Squad Already Exists\n");
@@ -148,7 +148,7 @@ while (!ended) {												//program didnt end
 						if (warzone == NULL) 
 							fprintf(stderr, "Error: No Such War Zone\n");
 
-						else if(Battlfield_Check_Squad(battlefield, currArgs2))
+						else if(Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");						
 						else
 							WarZone_Remove_Squad(warzone, currArgs2);
@@ -163,7 +163,7 @@ while (!ended) {												//program didnt end
 						else if (dest_w == NULL) 
 							fprintf(stderr, "Error: No Such Dest War Zone\n");
 
-						else if (!Battlfield_Check_Squad(battlefield, currArgs3))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs3))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else
 							WarZone_Move_Squad(origin_w, dest_w, currArgs3);
@@ -173,7 +173,7 @@ while (!ended) {												//program didnt end
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL) 
 							fprintf(stderr, "Error: No Such War Zone\n");
-						else if (!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else if (Battlefield_Check_Soldier(battlefield,currArgs3))
 							fprintf(stderr, "Error: Soldier Already Exists\n");
@@ -185,7 +185,7 @@ while (!ended) {												//program didnt end
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL)
 							fprintf(stderr, "Error: No Such War Zone\n");
-						else if (!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else if (!Battlefield_Check_Soldier(battlefield, currArgs3))
 							fprintf(stderr, "Error: No Such Soldier\n");
@@ -197,7 +197,7 @@ while (!ended) {												//program didnt end
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL)
 							fprintf(stderr, "Error: No Such War Zone\n");
-						else if (!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else if (Battlefield_Check_APC(battlefield, currArgs3))
 							fprintf(stderr, "Error: APC Already Exists\n");
@@ -209,7 +209,7 @@ while (!ended) {												//program didnt end
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL)
 							fprintf(stderr, "Error: No Such War Zone\n");
-						else if (!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else if (!Battlefield_Check_APC(battlefield, currArgs3))
 							fprintf(stderr, "Error: No Such APC\n");
@@ -221,7 +221,7 @@ while (!ended) {												//program didnt end
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL)
 							fprintf(stderr, "Error: No Such War Zone\n");
-						else if (!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else if (!Battlefield_Check_APC(battlefield, currArgs3))
 							fprintf(stderr, "Error: No Such APC\n");
@@ -235,7 +235,7 @@ while (!ended) {												//program didnt end
 						PWZ warzone = Battlefield_Get_WarZone(battlefield, currArgs1);
 						if (warzone == NULL)
 							fprintf(stderr, "Error: No Such War Zone\n");
-						else if (!Battlfield_Check_Squad(battlefield, currArgs2))
+						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							fprintf(stderr, "Error: No Such Squad\n");
 						else if (!Battlefield_Check_APC(battlefield, currArgs3))
 							fprintf(stderr, "Error: No Such APC\n");
@@ -300,5 +300,5 @@ while (!ended) {												//program didnt end
 	else
 		fprintf(stderr, "Error: Illegal Command\n");
 	}
-	return; //ended = true
+	return 0; //ended = true
 };

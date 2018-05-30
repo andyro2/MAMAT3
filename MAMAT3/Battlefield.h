@@ -17,9 +17,9 @@ void Battlefield_Del_WarZone(PBf, char*);
 void Battlefield_Move_all_Squads(PWZ, PBf);
 PWZ Battlefield_Get_WarZone(PBf, char*);
 
-bool Battlfield_Check_Squad(PBf bf, char* sq_ID);
-bool Battlfield_Check_Soldier(PBf bf, char* sol_ID);
-bool Battlfield_Check_APC(PBf bf, char* apc_ID);
+bool Battlefield_Check_Squad(PBf bf, char* sq_ID);
+bool Battlefield_Check_Soldier(PBf bf, char* sol_ID);
+bool Battlefield_Check_APC(PBf bf, char* apc_ID);
 
 void Add_Command(PBf, char* arg[MAX_ARG], int);
 void Delete_Command(PBf, PCommand);

@@ -137,7 +137,7 @@ PWZ Battlefield_Get_WarZone(PBf bf, char* wz)
 	return warzone;
 }
 
-bool Battlfield_Check_Squad(PBf bf, char* sq_ID)
+bool Battlefield_Check_Squad(PBf bf, char* sq_ID)
 {
 	if(sq_ID == NULL) {
 		printf(ARG_ERR_MSG);
@@ -164,18 +164,20 @@ bool Battlefield_Check_Soldier(PBf bf, char* sol_ID)
 		return false;
 	}
 	PWZ wz = List_Get_First(bf->warzones);
-	PList sq_list = WarZone_Get_Squad_List(wz);
+	PList sq_list;
 	PSquad squad; 
 	char* wz_ID, *sq_ID;
 	while (wz != NULL)
 	{
 		wz_ID = WarZone_Get_ID(wz);
+		sq_list = WarZone_Get_Squad_List(wz);
 		squad = List_Get_First(sq_list);
 		while (squad != NULL)
 		{
 			sq_ID = Squad_Get_ID(squad);
 			if (List_Get_Elem(Squad_Get_Soldier_List(squad), sol_ID) != NULL)
 				return true;
+			
 			squad = List_Get_Next(sq_list, sq_ID);
 		}
 		wz = List_Get_Next(bf->warzones, wz_ID);
@@ -190,12 +192,13 @@ bool Battlefield_Check_APC(PBf bf, char* APC_ID)
 		return false;
 	}
 	PWZ wz = List_Get_First(bf->warzones);
-	PList sq_list = WarZone_Get_Squad_List(wz);
+	PList sq_list;
 	PSquad squad;
 	char* wz_ID, *sq_ID;
 	while (wz != NULL)
 	{
 		wz_ID = WarZone_Get_ID(wz);
+		sq_list = WarZone_Get_Squad_List(wz);
 		squad = List_Get_First(sq_list);
 		while (squad != NULL)
 		{

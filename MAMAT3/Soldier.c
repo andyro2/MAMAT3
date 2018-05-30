@@ -42,7 +42,7 @@ soldier* Soldier_Duplicate(soldier* exist_soldier)
 		return NULL;
 	}
 
-	soldier* new_soldier = Soldier_Create(exist_soldier->pos, exist_soldier->ID);
+	soldier* new_soldier = Soldier_Create(exist_soldier->ID, exist_soldier->pos);
 	if (new_soldier == NULL) {
 		return NULL;
 	}
@@ -65,8 +65,8 @@ bool Soldier_Valid_ID_Pos(char* ID, char* pos)
 	if (ID[0] != 'S' || strlen(ID + 1) != LENGTH_OF_NUMS)
 		return false;
 	if (!strcmp(pos, "DRIVER") || !strcmp(pos, "MED") || !strcmp(pos, "ENG") || !strcmp(pos, "INT") || !strcmp(pos, "GUNNER"))
-		return false;
-	return true;
+		return true;
+	return false;
 }
 
 char* Soldier_Get_ID(soldier* s)

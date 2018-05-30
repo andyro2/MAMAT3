@@ -48,7 +48,7 @@ void APC_Print(APC* apc) {
 	printf("%s , Occupancy: %d/%d\n", apc->ID, apc->soldiers_num, APC_MAX_SOLDIERS);
 	if (apc->soldiers_num > 0) {
 		for (int i = 0; i < apc->soldiers_num; i++) {
-			printf("Seat %d: \n", i + 1);
+			printf("Seat %d: ", i + 1);
 			Soldier_Print(apc->soldiers[i]);
 		}
 	}

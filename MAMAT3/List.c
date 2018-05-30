@@ -155,7 +155,7 @@ PElem List_Get_First(PList l)
 	return l->pNode->elem;
 }
 
-PElem List_Get_Next(PList l, char* key)
+PElem List_Get_Next(PList l, PKey key)
 {
 	PNode n;
 	if ((l == NULL) || (l->pNode == NULL) || (key == NULL)) {
