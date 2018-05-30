@@ -153,7 +153,6 @@ PElem List_Get_First(PList l)
 	}
 	if (l->pNode == NULL)
 		return NULL;
-	//n = l->pNode; //unnecessary
 	return l->pNode->elem;
 }
 
@@ -180,8 +179,6 @@ PElem List_Get_Next(PList l, PKey key)
 	return NULL;
 }
 
-
-
 void List_Duplicate(PList l_exist, PList l_new)
 {
 	PElem new;
@@ -203,7 +200,6 @@ void List_Duplicate(PList l_exist, PList l_new)
 	}
 	return;
 }
-
 
 PKey List_Get_Key(PList l)
 {
@@ -231,7 +227,6 @@ PElem List_Get_Elem(PList l, PKey key)
 	}
 	return NULL;
 }
-
 
 CLONE_FUNC List_Get_Clone_Func(PList list)
 {

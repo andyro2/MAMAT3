@@ -60,6 +60,7 @@ void Squad_Delete(PSquad squad)
 	}
 	List_Delete(squad->Soldiers);
 	List_Delete(squad->APCs);
+//	free(squad->ID);
 	free(squad);
 	return;
 }
@@ -86,9 +87,9 @@ PSquad Squad_Duplicate(PSquad Squad) {
 	}
 	PList Soldiers = Squad->Soldiers;
 	PList APCs = Squad->APCs;
-	char same_ID[MAX_ID_LENGTH];
-	strcpy(same_ID, Squad->ID);
-	PSquad New_Squad = Squad_Create(same_ID,
+	//char* same_ID = malloc(MAX_ID_LENGTH + 1);
+	//strcpy(same_ID, Squad->ID);
+	PSquad New_Squad = Squad_Create(Squad->ID,
 		List_Get_Clone_Func(Soldiers), List_Get_Des_Func(Soldiers), List_Get_Cmp_Func(Soldiers), List_Get_Print_Func(Soldiers),
 		List_Get_Get_Key_Func(Soldiers), List_Get_Clone_Func(APCs), List_Get_Des_Func(APCs), List_Get_Cmp_Func(APCs),
 		List_Get_Print_Func(APCs), List_Get_Get_Key_Func(APCs));
@@ -166,10 +167,9 @@ Result Squad_APC_Pop(PSquad squad, char* apc_ID)
 		return FAILURE;
 	}
 	soldier* s = APC_Pop(a);
-	if (s == NULL) {
-		printf("Error: No Such Soldier\n");
+	if (s == NULL) 
 		return FAILURE;
-	}
+
 	return List_Add_Elem(squad->Soldiers, s);
 }
 

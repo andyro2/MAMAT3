@@ -50,6 +50,7 @@ void WarZone_Delete(PWZ WarZone) {
 		return;
 	}
 	List_Delete(WarZone->squads);
+//	free(WarZone->ID);
 	free(WarZone);
 }
 
@@ -70,9 +71,9 @@ PWZ WarZone_Duplicate(PWZ war_zone)
 	}
 	PList squad = war_zone->squads;
 
-	char same_ID[MAX_ID_LENGTH];
-	strcpy(same_ID, war_zone->ID);
-	PWZ new_war_zone = WarZone_Create(same_ID,
+	//char* same_ID = malloc(MAX_ID_LENGTH + 1);
+	//strcpy(same_ID, war_zone->ID);
+	PWZ new_war_zone = WarZone_Create(war_zone->ID,
 		List_Get_Clone_Func(squad), List_Get_Des_Func(squad), List_Get_Cmp_Func(squad), List_Get_Print_Func(squad),
 		List_Get_Get_Key_Func(squad));
 

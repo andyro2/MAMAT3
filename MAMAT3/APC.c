@@ -34,6 +34,7 @@ void APC_Delete(APC* apc)
 	}
 	for (int i=0; i < apc->soldiers_num; i++)
 		Soldier_Delete(apc->soldiers[i]);
+	//free(apc->ID);
 	free(apc);
 	return;
 }
@@ -61,9 +62,9 @@ APC* APC_Duplicate(APC* apc)
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	char same_ID[MAX_ID_LENGTH];
-	strcpy(same_ID, apc->ID);
-	new_apc = APC_Create(same_ID);
+	//char* same_ID = malloc(1+ MAX_ID_LENGTH);
+	//strcpy(same_ID, apc->ID);
+	new_apc = APC_Create(apc->ID);
 	for (int i = 0; i < apc->soldiers_num; i++) {
 		new_apc->soldiers[i] = Soldier_Duplicate(apc->soldiers[i]);
 		new_apc->soldiers_num++;
@@ -99,11 +100,10 @@ soldier* APC_Pop(APC* apc)
 	soldier* sold;
 	if (apc->soldiers_num != 0)
 	{
-		sold = apc->soldiers[apc->soldiers_num];
+		sold = apc->soldiers[apc->soldiers_num - 1];
 		apc->soldiers_num--;
 		return sold;
 	}
-
 	printf("Error: APC is Empty\n");
 	return NULL;
 }

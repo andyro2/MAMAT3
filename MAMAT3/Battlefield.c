@@ -75,11 +75,8 @@ void Battlefield_Delete(PBf bf) //bf !NULL
 	return;
 } 
 
-void Battlefield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
+void Battlefield_Move_all_Squads(PWZ to_wz, PBf bf)
 {
-	//PList new_list = List_Create(List_Get_Clone_Func(bf->warzones), List_Get_Des_Func(bf->warzones),
-			//List_Get_Cmp_Func(bf->warzones), List_Get_Print_Func(bf->warzones), List_Get_Get_Key_Func(bf->warzones));
-	//PList wz_list = bf->warzones;
 	PWZ curr_wz = (PWZ)List_Get_First(bf->warzones);
 	PSquad squad;
 	char* sq_ID;
@@ -91,7 +88,7 @@ void Battlefield_Move_all_Squads(PWZ to_wz, PBf bf) //not done!!!! TODO
 			{
 				sq_ID = Squad_Get_ID(squad);
 				WarZone_Move_Squad(curr_wz, to_wz, sq_ID);
-				squad = List_Get_Next(WarZone_Get_Squad_List(curr_wz),sq_ID);
+				squad = List_Get_First(WarZone_Get_Squad_List(curr_wz));
 			}
 		}
 		curr_wz = List_Get_Next(bf->warzones, WarZone_Get_ID(curr_wz));
@@ -119,17 +116,6 @@ void Battlefield_Del_WarZone(PBf bf, char* wz)
 		List_Remove_Elem(bf->warzones, wz);
 	return;
 }
-
-/*
-bool Battlefield_Emergency_WarZone(PBf bf, char* wz)
-{
-	PWZ warzone = (PWZ)List_Get_Elem(bf->warzones, wz);
-	if (warzone == NULL)
-		printf("Error: No Such War Zone\n");
-	else if (WarZone_Raise_Alert(warzone) == 3)
-		return true;
-	return false;
-}*/
 
 PWZ Battlefield_Get_WarZone(PBf bf, char* wz)
 {

@@ -41,12 +41,13 @@ soldier* Soldier_Duplicate(soldier* exist_soldier)
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	char same_ID[MAX_ID_LENGTH], same_pos[MAX_POS_LENGTH];
-	strcpy(same_ID,exist_soldier->ID);
-	strcpy(same_pos, exist_soldier->pos);
+	//har* same_ID =  malloc(MAX_ID_LENGTH + 1);
+	//char* same_pos =malloc(MAX_POS_LENGTH + 1);
+	//strcpy(same_ID,exist_soldier->ID);
+	//strcpy(same_pos, exist_soldier->pos);
 
 
-	soldier* new_soldier = Soldier_Create(same_ID, same_pos);
+	soldier* new_soldier = Soldier_Create(exist_soldier->ID, exist_soldier->pos);
 	if (new_soldier == NULL) {
 		return NULL;
 	}

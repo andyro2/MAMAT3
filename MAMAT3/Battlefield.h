@@ -13,7 +13,6 @@ PBf Battlefield_Create(CLONE_FUNC, DESTROY_FUNC, COMPARE_KEYS_FUNC, PRINT_FUNC, 
 void Battlefield_Delete(PBf);
 void Battlefield_Add_WarZone(PBf, char*);
 void Battlefield_Del_WarZone(PBf, char*);
-//bool Battlefield_Emergency_WarZone(PBf, char*);
 void Battlefield_Move_all_Squads(PWZ, PBf);
 PWZ Battlefield_Get_WarZone(PBf, char*);
 

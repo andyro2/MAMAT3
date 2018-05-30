@@ -246,6 +246,8 @@ while (!ended) {												//program didnt end
 					{
 						Print_Battlefield(battlefield);
 					}	
+					else
+						printf("Error: Illegal Command\n");
 				}
 				//if (currCommand != NULL)
 				//{
@@ -260,14 +262,15 @@ while (!ended) {												//program didnt end
 			printf("**********All Commands Executed**********\n\n");
 
 		}
-	else if (strlen(Curr_Command_Index) == 1) { //collect valid executions
+	else {//if (strlen(Curr_Command_Index) == 1) { //collect valid executions
 
 		command_index = atoi(Curr_Command_Index);
 		if (command_index == 0)
 			printf("Error: Illegal Command\n");
 		else
-		{
-			if (((!strcmp(Command_Arguments[0], "Add_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
+		//{
+			/*if (((!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL)) ||
+				((!strcmp(Command_Arguments[0], "Add_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
 				((!strcmp(Command_Arguments[0], "Del_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
 				((!strcmp(Command_Arguments[0], "R_W")) && (Command_Arguments[2] == NULL) && (Command_Arguments[1] != NULL)) ||
 				((!strcmp(Command_Arguments[0], "Add_Sq")) && (Command_Arguments[3] == NULL) && (Command_Arguments[2] != NULL)) ||
@@ -281,24 +284,24 @@ while (!ended) {												//program didnt end
 				((!strcmp(Command_Arguments[0], "APC_Pop")) && (Command_Arguments[4] == NULL) && (Command_Arguments[3] != NULL)) ||
 				((!strcmp(Command_Arguments[0], "Print")) && (Command_Arguments[1] == NULL)))
 			{//valid executions 
-
+			*/
 				//if (!Battlefield_Created) //battlefield yet created
 				//	printf("Error: No Battlefield\n");
 				//else
 					Add_Command(battlefield, Command_Arguments, command_index); //Command_Arguments[0]
-			}
-			else if ((!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL))
-			{
+			//}
+			//else if ((!strcmp(Command_Arguments[0], "Create_B")) && (Command_Arguments[1] == NULL))
+			//{
 				 //Needs to be created in order to store Command List
 				
-					Add_Command(battlefield, Command_Arguments, command_index);
-			}
-			else
-				printf("Error: Illegal Command\n");
-			}
+					//Add_Command(battlefield, Command_Arguments, command_index);
+			//}
+			//else
+			//	printf("Error: Illegal Command\n");
+			//}
 		}
-	else
-		printf("Error: Illegal Command\n");
+	//else
+		//printf("Error: Illegal Command\n");
 	}
 	return 0; //ended = true
 };
