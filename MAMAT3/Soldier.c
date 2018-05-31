@@ -1,4 +1,5 @@
 #include "Soldier.h"
+#include "defs.h"
 
 
 struct Soldier_ {
@@ -67,7 +68,7 @@ bool Soldier_Valid_ID_Pos(char* ID, char* pos)
 {
 	if (pos == NULL || ID == NULL)
 		return false;
-	if (ID[0] != 'S' || strlen(ID + 1) != LENGTH_OF_NUMS)
+	if (ID[0] != 'S'|| strlen(ID + 1) > LENGTH_OF_NUMS)
 		return false;
 	if (!strcmp(pos, "DRIVER") || !strcmp(pos, "MED") || !strcmp(pos, "ENG") || !strcmp(pos, "INT") || !strcmp(pos, "GUNNER"))
 		return true;

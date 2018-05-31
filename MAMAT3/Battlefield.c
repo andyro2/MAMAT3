@@ -58,8 +58,10 @@ PList Command_Sort(PBf bf) //bf !NULL
 	{
 		curr_comm = (PCommand)List_Get_Elem(unor_list, &i);
 		List_Add_Elem(ordered_list, curr_comm);
+		//Command_Delete(curr_comm);
 		i++;
 	}
+	List_Delete(unor_list);
 	return ordered_list;
 }
 
@@ -104,6 +106,7 @@ void Battlefield_Add_WarZone(PBf bf, char* wz)
 	{
 		PWZ warzone = WarZone_Create(wz, Squad_Clone_Func, Squad_Destroy_Func, Squad_Compare_Func, Squad_Print_Func, Squad_Get_Key_Function);
 		List_Add_Elem(bf->warzones, warzone);
+		WarZone_Delete(warzone);
 	}
 	return;
 }
@@ -212,16 +215,18 @@ bool Battlefield_Check_APC(PBf bf, char* APC_ID)
 
 void Add_Command(PBf bf, char* args[MAX_ARG], int index)
 { 
-
+	PCommand com = Command_Create(args, index);
 	//printf("arg[0]: %s, arg[1]: %s", args[0], args[1]);
-	if (List_Add_Elem(bf->commands, Command_Create(args, index)) == SUCCESS);
+	if (List_Add_Elem(bf->commands, com) == SUCCESS) {
 		bf->comm_num++;
+		Command_Delete(com);
+	}
 	return;
 }
 
 void Delete_Command(PBf bf, PCommand command)
 {
-	if (List_Remove_Elem(bf->commands, &(command->command_index)) == SUCCESS);
+	if (List_Remove_Elem(bf->commands, &(command->command_index)) == SUCCESS)
 		bf->comm_num--;
 	return;
 }				
@@ -233,11 +238,13 @@ PList Get_Command(PBf bf)
 
 void Set_Command(PBf bf, PList commands)
 {
-	PList new_commands = List_Create(List_Get_Clone_Func(commands),List_Get_Des_Func(commands),
+	/*PList new_commands = List_Create(List_Get_Clone_Func(commands),List_Get_Des_Func(commands),
 						List_Get_Cmp_Func(commands),List_Get_Print_Func(commands),List_Get_Get_Key_Func(commands));
-	List_Delete(bf->commands);
+	//List_Delete(bf->commands); already deleted!!!!!!!!!!
 	List_Duplicate(commands, new_commands);
-	bf->commands = new_commands;
+	bf->commands = new_commands;*/
+
+	bf->commands = commands;
 	return;
 }
 

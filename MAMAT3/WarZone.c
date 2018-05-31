@@ -2,6 +2,7 @@
 #include "Squad.h"
 #include "Soldier.h"
 #include "APC.h"
+#include "defs.h"
 
 struct War_Zone_ {
 	PList squads;
@@ -39,7 +40,7 @@ bool WarZone_Valid_ID(char* ID)
 {
 	if (ID == NULL)
 		return false;
-	if (ID[0] != 'W' || strlen(ID + 1) != LENGTH_OF_NUMS)
+	if (ID[0] != 'W'||strlen(ID + 1) > LENGTH_OF_NUMS)
 		return false;
 	return true;
 }
@@ -115,6 +116,7 @@ void WarZone_Add_Squad(PWZ wz, char* squad_ID)
 	if (squad == NULL)
 		return;
 	List_Add_Elem(wz->squads, squad); // Error msg in function
+	Squad_Delete(squad);
 	return;
 }
 

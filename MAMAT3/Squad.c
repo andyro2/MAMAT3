@@ -46,7 +46,7 @@ PSquad Squad_Create(char* ID,
 
 bool Squad_Valid_ID(char* ID)
 {
-	if (ID == NULL || ID[0] != 'S' || ID[1] != 'q' ||strlen(ID+2)!= LENGTH_OF_NUMS) {
+	if (ID == NULL || ID[0] != 'S'|| ID[1] != 'q' ||strlen(ID+2)> LENGTH_OF_NUMS) {
 		return false;
 	}
 	return true;
@@ -114,6 +114,7 @@ Result Squad_Add_Soldier(PSquad squad, char* pos, char* ID)
 	//PList sol = List_Create(Soldier_Clone_Func, Soldier_Destroy_Func, Soldier_Compare_Func, Soldier_Print_Func, Soldier_Get_Key_Function);
 	soldier* s = Soldier_Create(ID, pos);//TODO needs to be done without soldier struct (? or not ? ) 
 	r = List_Add_Elem(squad->Soldiers, s);
+	Soldier_Delete(s);
 	if (r == SUCCESS) {
 		squad->Count++;
 	}
@@ -128,7 +129,10 @@ Result Squad_Add_APC(PSquad squad, char* ID)
 		return FAILURE;
 	}
 	APC* a = APC_Create(ID);//TODO needs to be done without APC struct (? or not ? ) 
-	return List_Add_Elem(squad->APCs, a);
+	Result r;
+	 r = List_Add_Elem(squad->APCs, a);
+	APC_Delete(a);
+	return r;
 }
 
 Result Squad_Insert_Sold_APC(PSquad squad, char* sol_ID, char* apc_ID)
@@ -170,7 +174,9 @@ Result Squad_APC_Pop(PSquad squad, char* apc_ID)
 	if (s == NULL) 
 		return FAILURE;
 
-	return List_Add_Elem(squad->Soldiers, s);
+	Result r =List_Add_Elem(squad->Soldiers, s);
+	Soldier_Delete(s);
+	return r;
 }
 
 Result Squad_Delete_Soldier(PSquad squad, char* sol_ID)

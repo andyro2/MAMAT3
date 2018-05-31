@@ -1,5 +1,6 @@
 #include "APC.h"
 #include "Soldier.h"
+#include "defs.h"
 
 struct APC_ {
 	soldier* soldiers[APC_MAX_SOLDIERS];
@@ -131,7 +132,7 @@ int Get_Num_Soldiers(APC* a) {
 }
 
 bool APC_Valid_ID(char* ID) {
-	if (ID == NULL || ID[0] != 'A' || strlen(ID + 1) != LENGTH_OF_NUMS)
+	if (ID == NULL || ID[0] != 'A'|| strlen(ID + 1) > LENGTH_OF_NUMS)
 		return false;
 	return true;
 }
