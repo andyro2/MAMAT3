@@ -25,17 +25,12 @@ PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	l = (PList)malloc(sizeof(struct List_)); //option to use memset and array of elements
+	l = (PList)malloc(sizeof(struct List_)); 
 	if (l == NULL) {
 		free(l);
 		printf(MALLOC_ERR_MSG);
 		return NULL;
 	}
-	/*l->pNode->elem = (PElem*)malloc(sizeof(PElem));
-	if (l->pNode->elem == NULL) {
-	free(l->pNode->elem);
-	return NULL;
-	} *///I don't think the Node should be allocated in List Create
 	l->pNode = NULL;
 	l->clone_func = clone_func;
 	l->destroy_func = destroy_func;
@@ -56,12 +51,11 @@ void List_Delete(PList l)
 	Node* tempNode = l->pNode;
 	while (currNode) {
 		currNode = currNode->pNext;
-		l->destroy_func(tempNode->elem); //we assume also frees key (maybe? :/ )
-		free(tempNode); //if node dosen't have alloc then free is a warning (therefore needs alloc or no free)
+		l->destroy_func(tempNode->elem); 
+		free(tempNode); 
 		l->num--;
 		tempNode = currNode;
 	}
-	//free(l->destroy_func); // free all the func? They didnt (lecture&exercise) so I guess we Shouldn't
 	free(l);
 	return;
 }
@@ -88,13 +82,7 @@ Result List_Add_Elem(PList l, PElem elem)
 		printf(ARG_ERR_MSG);
 		return FAILURE;
 	}
-	/*new = (PElem)malloc(sizeof(PElem)); //There is no Elem Object => ERROR?
-	if (new == NULL) {
-	free(new);
-	printf(MALLOC_ERR_MSG);
-	return FAILURE;
-	}*/
-	new = l->clone_func(elem); //elem isn't NULL yet becomes NULL here ><
+	new = l->clone_func(elem); 
 	currNode = l->pNode;
 	prevNode = l->pNode;
 	while (currNode) {
@@ -107,7 +95,6 @@ Result List_Add_Elem(PList l, PElem elem)
 		printf(MALLOC_ERR_MSG);
 		return FAILURE;
 	}
-	//currNode->elem = (PElem*)malloc(sizeof(PElem));
 	currNode->elem = new;
 	currNode->key = l->get_key_func(new);
 	currNode->pNext = NULL;
@@ -116,7 +103,6 @@ Result List_Add_Elem(PList l, PElem elem)
 	else
 		l->pNode = currNode;
 	l->num++;
-	//l->destroy_func(elem);
 	return SUCCESS;
 }
 
@@ -135,7 +121,7 @@ Result List_Remove_Elem(PList l, PKey key)
 				l->pNode = currNode->pNext;
 			else
 				prevNode->pNext = currNode->pNext;
-			l->destroy_func(currNode->elem); //we assume also frees key
+			l->destroy_func(currNode->elem);
 			free(currNode);
 			l->num--;
 			return SUCCESS;
@@ -148,7 +134,6 @@ Result List_Remove_Elem(PList l, PKey key)
 
 PElem List_Get_First(PList l)
 {
-	//PNode n;
 	if (l == NULL) {
 		printf(ARG_ERR_MSG);
 		return NULL;
@@ -177,7 +162,6 @@ PElem List_Get_Next(PList l, PKey key)
 		else
 			n = n->pNext;
 	}
-	//printf(ARG_ERR_MSG); //There is no element corresponding to key
 	return NULL;
 }
 

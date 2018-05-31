@@ -35,7 +35,6 @@ void APC_Delete(APC* apc)
 	}
 	for (int i=0; i < apc->soldiers_num; i++)
 		Soldier_Delete(apc->soldiers[i]);
-	//free(apc->ID);
 	free(apc);
 	return;
 }
@@ -63,8 +62,6 @@ APC* APC_Duplicate(APC* apc)
 		printf(ARG_ERR_MSG);
 		return NULL;
 	}
-	//char* same_ID = malloc(1+ MAX_ID_LENGTH);
-	//strcpy(same_ID, apc->ID);
 	new_apc = APC_Create(apc->ID);
 	for (int i = 0; i < apc->soldiers_num; i++) {
 		new_apc->soldiers[i] = Soldier_Duplicate(apc->soldiers[i]);
@@ -82,8 +79,7 @@ Result APC_Insert_Soldier(APC* apc, soldier* sold)
 	}
 	if (apc->soldiers_num < APC_MAX_SOLDIERS)
 	{
-		//apc->soldiers[apc->soldiers_num] = Soldier_Duplicate(sold); 
-		apc->soldiers[apc->soldiers_num] = sold; // says not to duplicate soldier 
+		apc->soldiers[apc->soldiers_num] = sold; 
 		apc->soldiers_num++;
 		return SUCCESS;
 	}

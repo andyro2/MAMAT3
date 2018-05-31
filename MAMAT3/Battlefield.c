@@ -37,7 +37,6 @@ PBf Battlefield_Create(CLONE_FUNC clone_func_warzone, DESTROY_FUNC destroy_func_
 	if (bf == NULL)
 	{
 		free(bf);
-		//printf(MALLOC_ERR_MSG);
 		printf("Program Init Error\n");
 		return NULL;
 	}
@@ -58,7 +57,6 @@ PList Command_Sort(PBf bf) //bf !NULL
 	{
 		curr_comm = (PCommand)List_Get_Elem(unor_list, &i);
 		List_Add_Elem(ordered_list, curr_comm);
-		//Command_Delete(curr_comm);
 		i++;
 	}
 	List_Delete(unor_list);
@@ -68,7 +66,6 @@ PList Command_Sort(PBf bf) //bf !NULL
 void Battlefield_Delete(PBf bf) //bf !NULL
 {
 	if (bf == NULL) {
-		//printf(ARG_ERR_MSG);
 		return;
 	}
 	List_Delete(bf->warzones);
@@ -216,7 +213,6 @@ bool Battlefield_Check_APC(PBf bf, char* APC_ID)
 void Add_Command(PBf bf, char* args[MAX_ARG], int index)
 { 
 	PCommand com = Command_Create(args, index);
-	//printf("arg[0]: %s, arg[1]: %s", args[0], args[1]);
 	if (List_Add_Elem(bf->commands, com) == SUCCESS) {
 		bf->comm_num++;
 		Command_Delete(com);
@@ -238,12 +234,6 @@ PList Get_Command(PBf bf)
 
 void Set_Command(PBf bf, PList commands)
 {
-	/*PList new_commands = List_Create(List_Get_Clone_Func(commands),List_Get_Des_Func(commands),
-						List_Get_Cmp_Func(commands),List_Get_Print_Func(commands),List_Get_Get_Key_Func(commands));
-	//List_Delete(bf->commands); already deleted!!!!!!!!!!
-	List_Duplicate(commands, new_commands);
-	bf->commands = new_commands;*/
-
 	bf->commands = commands;
 	return;
 }
@@ -305,15 +295,12 @@ PKey WarZone_Get_Key_Function(PElem pElem)
 	WZ* s = (WZ*)pElem;
 	return WarZone_Get_ID(s);
 }
-// returns char* while expecting PKey - prone to ERROR?
 
 /* Command Functions*/
 
 PCommand Command_Create(char* args[MAX_ARG], int index)
 {
-	//printf("arg[0]: %s, arg[1]: %s", args[0], args[1]);
 	PCommand command = (PCommand)malloc(sizeof(Command));
-	//char* curr_arg;
 	if (command == NULL) {
 		free(command);
 		printf(MALLOC_ERR_MSG);
@@ -325,9 +312,6 @@ PCommand Command_Create(char* args[MAX_ARG], int index)
 			command->Command_Arguments[i] = NULL;
 		else
 		{ 
-			//strcpy(&((*command->Command_Arguments)[i]), &((*args)[i])); //Array of args- check validity
-			//curr_arg = (command->Command_Arguments)[i];
-			//command->Command_Arguments[i] = "Hello";
 			command->Command_Arguments[i] = malloc(strlen(args[i]) + 1);
 			strcpy(command->Command_Arguments[i], args[i]);
 		}

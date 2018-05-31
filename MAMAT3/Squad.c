@@ -60,7 +60,6 @@ void Squad_Delete(PSquad squad)
 	}
 	List_Delete(squad->Soldiers);
 	List_Delete(squad->APCs);
-//	free(squad->ID);
 	free(squad);
 	return;
 }
@@ -87,8 +86,6 @@ PSquad Squad_Duplicate(PSquad Squad) {
 	}
 	PList Soldiers = Squad->Soldiers;
 	PList APCs = Squad->APCs;
-	//char* same_ID = malloc(MAX_ID_LENGTH + 1);
-	//strcpy(same_ID, Squad->ID);
 	PSquad New_Squad = Squad_Create(Squad->ID,
 		List_Get_Clone_Func(Soldiers), List_Get_Des_Func(Soldiers), List_Get_Cmp_Func(Soldiers), List_Get_Print_Func(Soldiers),
 		List_Get_Get_Key_Func(Soldiers), List_Get_Clone_Func(APCs), List_Get_Des_Func(APCs), List_Get_Cmp_Func(APCs),
@@ -111,8 +108,7 @@ Result Squad_Add_Soldier(PSquad squad, char* pos, char* ID)
 		return FAILURE;
 	}
 	Result r;
-	//PList sol = List_Create(Soldier_Clone_Func, Soldier_Destroy_Func, Soldier_Compare_Func, Soldier_Print_Func, Soldier_Get_Key_Function);
-	soldier* s = Soldier_Create(ID, pos);//TODO needs to be done without soldier struct (? or not ? ) 
+	soldier* s = Soldier_Create(ID, pos);
 	r = List_Add_Elem(squad->Soldiers, s);
 	Soldier_Delete(s);
 	if (r == SUCCESS) {
@@ -128,7 +124,7 @@ Result Squad_Add_APC(PSquad squad, char* ID)
 		printf(ARG_ERR_MSG);
 		return FAILURE;
 	}
-	APC* a = APC_Create(ID);//TODO needs to be done without APC struct (? or not ? ) 
+	APC* a = APC_Create(ID);
 	Result r;
 	 r = List_Add_Elem(squad->APCs, a);
 	APC_Delete(a);
