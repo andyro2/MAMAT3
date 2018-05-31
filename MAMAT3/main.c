@@ -9,7 +9,6 @@
 #include "Battlefield.h"
 
 #define MAX_LINE_SIZE 256
-//#pragma warning(disable:4996)
 
 
 int main()

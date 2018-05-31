@@ -31,11 +31,11 @@ PList List_Create(CLONE_FUNC clone_func, DESTROY_FUNC destroy_func, COMPARE_KEYS
 		printf(MALLOC_ERR_MSG);
 		return NULL;
 	}
-	/*l->pNode = (Node*)malloc(sizeof(struct Node_));
-	if (l->pNode == NULL) {
-	free(l);
+	/*l->pNode->elem = (PElem*)malloc(sizeof(PElem));
+	if (l->pNode->elem == NULL) {
+	free(l->pNode->elem);
 	return NULL;
-	}*/ //I don't think the Node should be allocated in List Create
+	} *///I don't think the Node should be allocated in List Create
 	l->pNode = NULL;
 	l->clone_func = clone_func;
 	l->destroy_func = destroy_func;
@@ -107,6 +107,7 @@ Result List_Add_Elem(PList l, PElem elem)
 		printf(MALLOC_ERR_MSG);
 		return FAILURE;
 	}
+	//currNode->elem = (PElem*)malloc(sizeof(PElem));
 	currNode->elem = new;
 	currNode->key = l->get_key_func(new);
 	currNode->pNext = NULL;
@@ -115,6 +116,7 @@ Result List_Add_Elem(PList l, PElem elem)
 	else
 		l->pNode = currNode;
 	l->num++;
+	l->destroy_func(elem);
 	return SUCCESS;
 }
 
