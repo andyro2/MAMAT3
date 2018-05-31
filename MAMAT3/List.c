@@ -116,7 +116,7 @@ Result List_Add_Elem(PList l, PElem elem)
 	else
 		l->pNode = currNode;
 	l->num++;
-	l->destroy_func(elem);
+	//l->destroy_func(elem);
 	return SUCCESS;
 }
 
@@ -197,6 +197,7 @@ void List_Duplicate(PList l_exist, PList l_new)
 			printf(MALLOC_ERR_MSG);
 			return;
 		}
+		l_exist->destroy_func(new);
 		prevNode = currNode;
 		currNode = currNode->pNext;
 	}
