@@ -223,9 +223,26 @@ while (!ended) {												//program didnt end
 						else if (!Battlefield_Check_Squad(battlefield, currArgs2))
 							printf("Error: No Such Squad\n");
 						else if (!Battlefield_Check_APC(battlefield, currArgs3))
-							printf("Error: No Such APC\n");
+						{
+							PSquad squad = (PSquad)List_Get_Elem(WarZone_Get_Squad_List(warzone), currArgs2);
+							if (squad == NULL)
+								printf("Error: No Such Squad\n");
+							else
+								printf("Error: No Such APC\n");
+						}
 						else if (!Battlefield_Check_Soldier(battlefield, currArgs4))
-							printf("Error: No Such Soldier\n");
+						{
+								PSquad squad = (PSquad)List_Get_Elem(WarZone_Get_Squad_List(warzone), currArgs2);
+								if (squad == NULL)
+									printf("Error: No Such Squad\n");
+								else {
+									APC* a = (APC*)List_Get_Elem(Squad_Get_APC_List(squad), currArgs4);
+									if (a == NULL)
+										printf("Error: No Such APC\n");
+									else
+										printf("Error: No Such Soldier\n");
+								}
+						}
 						else
 							WarZone_Sold_Insert(warzone, currArgs2, currArgs3, currArgs4);
 					}
