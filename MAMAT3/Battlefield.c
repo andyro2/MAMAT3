@@ -241,6 +241,7 @@ void Set_Command(PBf bf, PList commands)
 	return;
 }
 
+
 int Get_Command_Num(PBf bf)
 {
 	return bf->comm_num;
